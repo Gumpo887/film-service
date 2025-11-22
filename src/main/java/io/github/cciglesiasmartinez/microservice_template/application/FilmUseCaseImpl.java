@@ -32,6 +32,8 @@ public class FilmUseCaseImpl implements FilmUseCase {
     private final FilmRepository filmRepository;
     private final ListFilmsUseCase listFilmsUseCase;
 
+    // TODO: Refactor these usecases, give each one a class then inject them here via constructor
+
     @Override
     public Envelope<CreateFilmResponse> createFilm(CreateFilmRequest request) {
         Film film = Film.create(
