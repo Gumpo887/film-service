@@ -1,11 +1,10 @@
-package io.github.cciglesiasmartinez.microservice_template.application; 
+package io.github.cciglesiasmartinez.microservice_template.application.usecases;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import io.github.cciglesiasmartinez.microservice_template.application.usecases.ListFilmsUseCase;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.Film;
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRepository;
 import io.github.cciglesiasmartinez.microservice_template.domain.shared.PageResult;
