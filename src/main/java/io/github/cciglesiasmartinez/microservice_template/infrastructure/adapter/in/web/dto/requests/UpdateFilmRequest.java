@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.filmrequest;
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
@@ -13,6 +13,9 @@ import lombok.Setter;
 @Setter
 @Schema(description = "Payload to update an existing film (partial update). Only non-null fields will be updated.")
 public class UpdateFilmRequest {
+
+    @Schema(description = "Film id (uuidv4)", example = "1d5c39d2-8a2c-4d28-a6d4-e4e41090bbae")
+    private String id;
 
     @Size(max = 200)
     @Schema(description = "Film title", example = "Inception (Director's Cut)")
