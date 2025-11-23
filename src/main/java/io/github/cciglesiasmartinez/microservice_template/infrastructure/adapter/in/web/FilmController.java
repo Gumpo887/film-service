@@ -2,12 +2,9 @@ package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapte
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.FilmUseCase;
 import io.github.cciglesiasmartinez.microservice_template.application.usecases.ListFilmsUseCase;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.FilmId;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.filmrequest.CreateFilmRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.CreateFilmResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.DeleteFilmResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.Envelope;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.GetFilmResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.CreateFilmRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.UpdateFilmRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.*;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.listfilmsresponse.ListFilmsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,7 +30,7 @@ public class FilmController {
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Film retrieved successfully."))
     @GetMapping("/{id}")
     public ResponseEntity<Envelope<GetFilmResponse>> getFilm(@PathVariable String id) {
-        Envelope<GetFilmResponse> response = filmUseCase.getFilm(FilmId.of(id));
+        Envelope<GetFilmResponse> response = filmUseCase.getFilm(id);
         return ResponseEntity.ok(response);
     }
 
@@ -45,7 +42,6 @@ public class FilmController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    
     @Operation(summary = "List film (paged).")
     @ApiResponses(@ApiResponse(responseCode ="200", description = "films retived succefully."))
     @GetMapping
@@ -53,7 +49,6 @@ public class FilmController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-        
        Envelope<ListFilmsResponse> env = listFilmsUseCase.execute(page, size);
        return ResponseEntity.ok(env);
     }
@@ -62,8 +57,16 @@ public class FilmController {
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Film deleted successfully."))
     @DeleteMapping("/{id}")
     public ResponseEntity<Envelope<DeleteFilmResponse>> deleteFilm(@PathVariable String id) {
-        Envelope<DeleteFilmResponse> response = filmUseCase.deleteFilm(FilmId.of(id));
-        return ResponseEntity.ok(response);
+        Envelope<DeleteFilmResponse> response = filmUseCase.deleteFilm(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Updates a film.", description = "Updates information on a given film.")
+    @ApiResponses(@ApiResponse(responseCode = "202", description = "Film updated successfully."))
+    @PutMapping("")
+    public ResponseEntity<Envelope<UpdateFilmResponse>> updateFilm(@Valid @RequestBody UpdateFilmRequest request) {
+        Envelope<UpdateFilmResponse> response = filmUseCase.updateFilm(request);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
     
     // --> http://api.nuestraapp.com/films/tmdb?tile="loquesea"&year="loquefuese"
@@ -81,5 +84,6 @@ public class FilmController {
 //    public ResponseEntity<Envelope<SearchTmdbResponse>> searchTmdb(@RequestParam String title, @RequestParam int year) {
 //    	return null;
 //    }
+
 }
 
