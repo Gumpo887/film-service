@@ -49,8 +49,8 @@ public class FilmController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-       Envelope<ListFilmsResponse> env = listFilmsUseCase.execute(page, size);
-       return ResponseEntity.ok(env);
+       Envelope<ListFilmsResponse> response = listFilmsUseCase.execute(page, size);
+       return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Deletes a film.", description = "Deletes a film by its identifier.")
