@@ -28,6 +28,9 @@ public interface FilmUseCase {
     
     Envelope<ListFilmsResponse> listFilms(int page, int size);
     
+    // Aqui o con Mono si se tiene que ahcer, o con Envelope directamente, el metodo de TmdbSearch
+    // Mono<Envelope<TmdbSearchResponse>> tmdbSearch(TmdbSearchRequest request)
+    
 }
 
 

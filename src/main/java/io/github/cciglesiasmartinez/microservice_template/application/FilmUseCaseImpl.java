@@ -57,7 +57,6 @@ public class FilmUseCaseImpl implements FilmUseCase {
 
 	@Override
 	public Envelope<ListFilmsResponse> listFilms(int page, int size) {
-		
 		return listFilmsUseCase.execute(page, size);
 	}
 

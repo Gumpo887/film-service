@@ -84,6 +84,12 @@ public class FilmController {
 //    public ResponseEntity<Envelope<SearchTmdbResponse>> searchTmdb(@RequestParam String title, @RequestParam int year) {
 //    	return null;
 //    }
+    
+    // Recuerda que preferentemente intentaremos que sea Envelope<TmdbSearchResponse> y no Mono, pero si hay que usar Mono
+    // está bien --> Investiga esto.
+    
+    // crearemos aquí el controller que llamará al filmUseCase.tmdbSearch(request) donde el request sera un DTO con los filtros
+    
 
 }
 
