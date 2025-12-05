@@ -12,11 +12,8 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.GetFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.UpdateFilmResponse;
-// ✂️ Imports de paginación/DTO listado eliminados de aquí (se mueven al nuevo caso de uso)
-// import io.github...PageResult;
-// import io.github...listfilmsresponse.FilmSummaryDto;
-// import io.github...listfilmsresponse.ListFilmsResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.listfilmsresponse.ListFilmsResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.TmdbDiscoverResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FilmUseCaseImpl implements FilmUseCase {
 
-    private final FilmRepository filmRepository;
+	
     private final ListFilmsUseCase listFilmsUseCase;
+    private final TmdbSearchUseCase tmdbSearchUseCase;
 
     // TODO: Refactor these usecases, give each one a class then inject them here via constructor
 
@@ -55,11 +53,15 @@ public class FilmUseCaseImpl implements FilmUseCase {
         return deleteFilmUseCase.execute(id);
     }
 
-	@Override
-	public Envelope<ListFilmsResponse> listFilms(int page, int size) {
-		
-		return listFilmsUseCase.execute(page, size);
-	}
+    @Override
+    public Envelope<ListFilmsResponse> listFilms(int page, int size) {
+        return listFilmsUseCase.execute(page, size);
+    }
+
+    @Override
+    public Envelope<TmdbDiscoverResponse> tmdbSearch(TmdbSearchRequest request) {
+        return tmdbSearchUseCase.execute(request);
+    }
 
 }
 

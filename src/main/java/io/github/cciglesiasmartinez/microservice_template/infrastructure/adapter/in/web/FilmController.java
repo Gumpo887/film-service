@@ -6,12 +6,15 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.UpdateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.*;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.listfilmsresponse.ListFilmsResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.TmdbDiscoverResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import reactor.core.publisher.Mono;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -69,21 +72,14 @@ public class FilmController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
     
-    // --> http://api.nuestraapp.com/films/tmdb?tile="loquesea"&year="loquefuese"
-    /*
-     * Aquí básicamente lo que vas a tener que hacer es:
-     * 1. Averiguar qué opciones te da el API de TMDB para hacer búsquedas
-     * 2. Definir una serie de RequestParams que utilizar en las búsquedas.
-     * Este punto NO tiene por qué ser necesario, depende de cómo funcione TMDB.
-     * 3. Hacer una petición API con los datos a buscar en TMDB y recibirla.
-     * 4. Mapear esta petición a un List<Film> con los datos que nos interesan
-     * 5. Servir la lista
-     */
-    
-//    @GetMapping("/tmdb")
-//    public ResponseEntity<Envelope<SearchTmdbResponse>> searchTmdb(@RequestParam String title, @RequestParam int year) {
-//    	return null;
-//    }
+    @Operation(summary = "Discover TMDB films.", description = "Call TMDB discover/movie using the provided filters.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "TMDB results retrieved successfully."))
+    @PostMapping("/tmdb")
+    public ResponseEntity<Envelope<TmdbDiscoverResponse>> discoverTmdb(@Valid @RequestBody TmdbSearchRequest request) {
+        Envelope<TmdbDiscoverResponse> response = filmUseCase.tmdbSearch(request);
+        return ResponseEntity.ok(response);
+    }
+
 
 }
 
