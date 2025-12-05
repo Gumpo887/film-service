@@ -9,7 +9,7 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.GetFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.UpdateFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.listfilmsresponse.ListFilmsResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.TmdbDiscoverResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.response.tmdb.TmdbDiscoverResponse;
 
 public interface FilmUseCase {
 	

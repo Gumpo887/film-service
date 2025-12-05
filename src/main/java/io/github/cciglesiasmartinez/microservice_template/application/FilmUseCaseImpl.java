@@ -4,16 +4,16 @@ import io.github.cciglesiasmartinez.microservice_template.application.usecases.*
 import org.springframework.stereotype.Service;
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.FilmUseCase;
-import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRepository;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.CreateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.UpdateFilmRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.tmdb.TmdbSearchRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.CreateFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.DeleteFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.GetFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.UpdateFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.listfilmsresponse.ListFilmsResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.TmdbDiscoverResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.response.tmdb.TmdbDiscoverResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,10 +58,10 @@ public class FilmUseCaseImpl implements FilmUseCase {
         return listFilmsUseCase.execute(page, size);
     }
 
-    @Override
-    public Envelope<TmdbDiscoverResponse> tmdbSearch(TmdbSearchRequest request) {
-        return tmdbSearchUseCase.execute(request);
-    }
+	@Override
+	public Envelope<TmdbDiscoverResponse> tmdbSearch(TmdbSearchRequest request) {
+		return tmdbSearchUseCase.execute(request);
+	}
 
 }
 

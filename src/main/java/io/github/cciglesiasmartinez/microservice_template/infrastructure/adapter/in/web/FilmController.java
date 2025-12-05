@@ -4,16 +4,16 @@ import io.github.cciglesiasmartinez.microservice_template.application.port.in.Fi
 import io.github.cciglesiasmartinez.microservice_template.application.usecases.ListFilmsUseCase;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.CreateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.UpdateFilmRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.tmdb.TmdbSearchRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.*;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.listfilmsresponse.ListFilmsResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.TmdbDiscoverResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.response.tmdb.TmdbDiscoverResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import reactor.core.publisher.Mono;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
