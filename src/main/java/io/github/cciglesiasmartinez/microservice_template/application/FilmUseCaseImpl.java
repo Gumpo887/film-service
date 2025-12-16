@@ -4,19 +4,16 @@ import io.github.cciglesiasmartinez.microservice_template.application.usecases.*
 import org.springframework.stereotype.Service;
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.FilmUseCase;
-import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRepository;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.CreateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.UpdateFilmRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.tmdb.TmdbSearchRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.CreateFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.DeleteFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.GetFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.UpdateFilmResponse;
-// ✂️ Imports de paginación/DTO listado eliminados de aquí (se mueven al nuevo caso de uso)
-// import io.github...PageResult;
-// import io.github...listfilmsresponse.FilmSummaryDto;
-// import io.github...listfilmsresponse.ListFilmsResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.listfilmsresponse.ListFilmsResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.response.tmdb.TmdbDiscoverResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FilmUseCaseImpl implements FilmUseCase {
 
-    private final FilmRepository filmRepository;
+	
     private final ListFilmsUseCase listFilmsUseCase;
+    private final TmdbSearchUseCase tmdbSearchUseCase;
 
     // TODO: Refactor these usecases, give each one a class then inject them here via constructor
 
@@ -55,10 +53,14 @@ public class FilmUseCaseImpl implements FilmUseCase {
         return deleteFilmUseCase.execute(id);
     }
 
+    @Override
+    public Envelope<ListFilmsResponse> listFilms(int page, int size) {
+        return listFilmsUseCase.execute(page, size);
+    }
+
 	@Override
-	public Envelope<ListFilmsResponse> listFilms(int page, int size) {
-		
-		return listFilmsUseCase.execute(page, size);
+	public Envelope<TmdbDiscoverResponse> tmdbSearch(TmdbSearchRequest request) {
+		return tmdbSearchUseCase.execute(request);
 	}
 
 }
