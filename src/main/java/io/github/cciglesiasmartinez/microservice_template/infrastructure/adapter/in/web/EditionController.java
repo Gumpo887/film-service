@@ -1,0 +1,58 @@
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web;
+
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.Envelope;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@AllArgsConstructor
+@RestController
+@RequestMapping("/edition")
+@Tag(name = "Edition service.", description = "Endpoints related to Edition entity.")
+public class EditionController {
+
+    @Operation(summary = "Retrieves an edition.", description = "Retrieves an edition given its identifier.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "Edition retrieved successfully."))
+    @GetMapping("/{id}")
+    public ResponseEntity<Envelope<GetEditionResponse>> getEdition(@PathVariable String id) {
+        return null;
+    }
+
+    @Operation(summary = "Creates a new edition.", description = "Creates a new edition with provided data.")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "Film created successfully."))
+    @PostMapping("")
+    public ResponseEntity<Envelope<CreateEditionResponse>> createEdition(
+            @Valid @RequestBody CreateEditionRequest request) {
+        return null;
+    }
+
+    @Operation(summary = "List editions (paged).")
+    @ApiResponses(@ApiResponse(responseCode ="200", description = "Editions retrieved successfully."))
+    @GetMapping
+    public ResponseEntity<Envelope<ListEditionsResponse>> listEditions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        return null;
+    }
+
+    @Operation(summary = "Deletes an edition.", description = "Deletes an edition by its identifier.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "Edition deleted successfully."))
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Envelope<DeleteEditionResponse>> deleteEdition(@PathVariable String id) {
+        return null;
+    }
+
+    @Operation(summary = "Updates an edition.", description = "Updates information on a given edition.")
+    @ApiResponses(@ApiResponse(responseCode = "202", description = "Edition updated successfully."))
+    @PutMapping("")
+    public ResponseEntity<Envelope<UpdateEditionResponse>> updateEdition(
+            @Valid @RequestBody UpdateEditionRequest request) {
+        return null;
+    }
+
+}
