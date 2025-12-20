@@ -45,8 +45,8 @@ public class FilmController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "List film (paged).")
-    @ApiResponses(@ApiResponse(responseCode ="200", description = "films retived succefully."))
+    @Operation(summary = "List films (paged).")
+    @ApiResponses(@ApiResponse(responseCode ="200", description = "films retrieved successfully."))
     @GetMapping
     public ResponseEntity<Envelope<ListFilmsResponse>> listFilms(
             @RequestParam(defaultValue = "0") int page,
