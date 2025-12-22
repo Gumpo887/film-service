@@ -53,6 +53,7 @@ public class EditionEntity implements Serializable {
     @Column(name = "country")
     private String country;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "format")
     private String format;
 
@@ -77,6 +78,7 @@ public class EditionEntity implements Serializable {
     /*
         Physical details
      */
+    @Enumerated(EnumType.STRING)
     @Column(name = "packaging_type")
     private String packagingType;
 //
