@@ -3,8 +3,8 @@ package io.github.cciglesiasmartinez.microservice_template.application.usecases;
 import org.springframework.stereotype.Service;
 
 import io.github.cciglesiasmartinez.microservice_template.domain.exception.WrongFilmIdException;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.Film;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.FilmId;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.Film;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.FilmId;
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRepository;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.GetFilmResponse;

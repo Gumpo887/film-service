@@ -1,6 +1,6 @@
 package io.github.cciglesiasmartinez.microservice_template.application.usecases;
 
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.FilmId;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.FilmId;
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRepository;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.DeleteFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;

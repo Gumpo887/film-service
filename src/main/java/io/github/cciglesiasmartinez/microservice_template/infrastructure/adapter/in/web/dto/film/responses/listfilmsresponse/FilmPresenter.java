@@ -2,7 +2,7 @@ package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapte
 
 import org.springframework.stereotype.Component;
 
-import io.github.cciglesiasmartinez.microservice_template.domain.model.Film;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.Film;
 
 @Component
 public class FilmPresenter {

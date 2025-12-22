@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects;
+package io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,7 +1,7 @@
 package io.github.cciglesiasmartinez.microservice_template.application.usecases;
 
-import io.github.cciglesiasmartinez.microservice_template.domain.model.Film;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.*;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.Film;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.*;
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRepository;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.CreateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.CreateFilmResponse;

@@ -1,12 +1,12 @@
-package io.github.cciglesiasmartinez.microservice_template.domain.model;
+package io.github.cciglesiasmartinez.microservice_template.domain.model.film;
 
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.Description;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.FilmId;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.Poster;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.ProducingCountry;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.Rating;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.ReleaseYear;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.Title;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Description;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.FilmId;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Poster;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.ProducingCountry;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Rating;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.ReleaseYear;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Title;
 
 /**
  * Representa una película dentro del sistema.

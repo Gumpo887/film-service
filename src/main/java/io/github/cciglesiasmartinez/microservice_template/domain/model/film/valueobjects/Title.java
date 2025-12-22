@@ -1,6 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects;
-
-
+package io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,22 +8,23 @@ import lombok.ToString;
 
 @EqualsAndHashCode
 @ToString
-public class ProducingCountry {
+public class Title {
 	
 	private final String value;
 	
 	@JsonCreator
-	private ProducingCountry(@JsonProperty("value")String value) {
+	private Title(@JsonProperty("value") String value) {
 		this.value = value;
 	}
-	
-	public static ProducingCountry of(String lenguage) {
-		if (lenguage == null || lenguage .isBlank()) {
-			throw new IllegalArgumentException("Name can't be null or empty.");
+
+	public static Title of(String title) {
+		if (title == null || title.isBlank() ) {
+			throw new IllegalArgumentException("Title can't be null or empty.");
 		}
-		return new ProducingCountry(lenguage);
+		return new Title(title);
 		
 	}
+	
 	public String value() {
         return this.value;
     }
@@ -34,5 +33,4 @@ public class ProducingCountry {
         return this.value;
     }
 	
-
 }

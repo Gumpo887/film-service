@@ -3,9 +3,9 @@ package io.github.cciglesiasmartinez.microservice_template.domain.port.out;
 import java.util.List;
 import java.util.Optional;
 
-import io.github.cciglesiasmartinez.microservice_template.domain.model.Film;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.FilmId;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.Title;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.Film;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.FilmId;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Title;
 import io.github.cciglesiasmartinez.microservice_template.domain.shared.PageResult;
 
 public interface FilmRepository {
