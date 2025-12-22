@@ -24,7 +24,7 @@ public class FilmUseCaseImpl implements FilmUseCase {
 
 	
     private final ListFilmsUseCase listFilmsUseCase;
-    private final TmdbSearchUseCase tmdbSearchUseCase;
+    private final TmdbDiscoverUseCase tmdbDiscoverUseCase;
 
     // TODO: Refactor these usecases, give each one a class then inject them here via constructor
 
@@ -60,7 +60,7 @@ public class FilmUseCaseImpl implements FilmUseCase {
 
 	@Override
 	public Envelope<TmdbDiscoverResponse> tmdbSearch(TmdbDiscoverRequest request) {
-		return tmdbSearchUseCase.execute(request);
+		return tmdbDiscoverUseCase.execute(request);
 	}
 
 }

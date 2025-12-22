@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @RequiredArgsConstructor
-public class TmdbSearchUseCase {
+public class TmdbDiscoverUseCase {
 
     private final WebClient tmdbWebClient;
 
