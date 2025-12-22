@@ -11,18 +11,15 @@ import java.time.LocalDateTime;
 public class Picture {
 
     private PictureId id;
-    private Edition edition;
     private Url url;
     private LocalDateTime uploadedAt;
 
     private Picture(
             PictureId id,
-            Edition edition,
             Url url,
             LocalDateTime uploadedAt
     ) {
         this.id = id;
-        this.edition = edition;
         this.url = url;
         this.uploadedAt = uploadedAt;
     }
@@ -30,34 +27,30 @@ public class Picture {
     /**
      * Factory method intended to create a picture for the first time.
      *
-     * @param edition
      * @param url
      * @param uploadedAt
      * @return
      */
     public static Picture create(
-            Edition edition,
             Url url,
             LocalDateTime uploadedAt
     ) {
-        return new Picture(PictureId.generate(), edition, url, uploadedAt);
+        return new Picture(PictureId.generate(), url, uploadedAt);
     }
 
     /**
      * Factory method to hidrate from a picture object from persistence.
      *
      * @param id
-     * @param edition
      * @param url
      * @param uploadedAt
      * @return
      */
     public static Picture of(
             PictureId id,
-            Edition edition,
             Url url,
             LocalDateTime uploadedAt
     ) {
-        return new Picture(id, edition, url, uploadedAt);
+        return new Picture(id, url, uploadedAt);
     }
 }
