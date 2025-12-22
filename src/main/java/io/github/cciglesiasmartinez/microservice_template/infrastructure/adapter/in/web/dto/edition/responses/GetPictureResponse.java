@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Schema(description = "Picture resource.")
-public class PictureResponse {
+public class GetPictureResponse {
 
     private String id;
     private String url;
