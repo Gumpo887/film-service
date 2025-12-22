@@ -13,12 +13,11 @@ import java.time.Year;
 @Setter
 public class UpdateEditionRequest {
 
-    private String editionName;
+    private String barCode;
     private String country;
     private String format;
     private Year releaseYear;
     private String packagingType;
-    private String caseDimensions;
     private String notes;
 
 }

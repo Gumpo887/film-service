@@ -19,17 +19,14 @@ public class GetEditionResponse {
     private String id;
     private String filmId;
 
-    private String editionName;
+    private String barcode;
     private String country;
     private String format;
     private Year releaseYear;
-
     private String packagingType;
-    private String caseDimensions;
-
     private boolean verified;
     private String notes;
 
-    private List<PictureResponse> pictures;
+    private List<GetPictureResponse> pictures;
 
 }
