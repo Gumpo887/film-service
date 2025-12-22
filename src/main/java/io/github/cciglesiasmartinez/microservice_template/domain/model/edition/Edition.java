@@ -6,7 +6,7 @@ import io.github.cciglesiasmartinez.microservice_template.domain.model.film.Film
 import java.time.Year;
 
 /**
- * Representa una edición dentro del sistema.
+ * Represents an edition within the system.
  */
 public class Edition {
 
@@ -64,7 +64,7 @@ public class Edition {
     }
 
     /**
-     * Factory method to hidrate a domain edition object from persistence.
+     * Factory method to hidrate a domain edition from a persistence object.
      *
      * @param id
      * @param film
