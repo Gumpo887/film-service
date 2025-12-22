@@ -14,7 +14,7 @@ import lombok.Setter;
 public class GetFilmResponse {
 
     @Schema(
-            description = "Item identifier (UUIDv4).",
+            description = "Film identifier (UUIDv4).",
             example = "57e9fc95-2a66-40e7-8fd3-debd19a661e3"
     )
     private String id;
