@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.response.tmdb;
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses;
 
 import java.util.List;
 

@@ -6,9 +6,9 @@ import io.github.cciglesiasmartinez.microservice_template.domain.exception.Wrong
 import io.github.cciglesiasmartinez.microservice_template.domain.model.Film;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.valueobjects.FilmId;
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRepository;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.Envelope;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.GetFilmResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.Meta;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.GetFilmResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Meta;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses;
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

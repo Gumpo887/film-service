@@ -2,12 +2,13 @@ package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapte
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.FilmUseCase;
 import io.github.cciglesiasmartinez.microservice_template.application.usecases.ListFilmsUseCase;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.CreateFilmRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.UpdateFilmRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.tmdb.TmdbSearchRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.*;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.listfilmsresponse.ListFilmsResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.dto.response.tmdb.TmdbDiscoverResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.CreateFilmRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.UpdateFilmRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.TmdbDiscoverRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.*;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.listfilmsresponse.ListFilmsResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbDiscoverResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -75,7 +76,7 @@ public class FilmController {
     @Operation(summary = "Discover TMDB films.", description = "Call TMDB discover/movie using the provided filters.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "TMDB results retrieved successfully."))
     @PostMapping("/tmdb")
-    public ResponseEntity<Envelope<TmdbDiscoverResponse>> discoverTmdb(@Valid @RequestBody TmdbSearchRequest request) {
+    public ResponseEntity<Envelope<TmdbDiscoverResponse>> discoverTmdb(@Valid @RequestBody TmdbDiscoverRequest request) {
         Envelope<TmdbDiscoverResponse> response = filmUseCase.tmdbSearch(request);
         return ResponseEntity.ok(response);
     }

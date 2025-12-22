@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.requests.tmdb;
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TmdbSearchRequest {
+public class TmdbDiscoverRequest {
 
     @Schema(description = "Include adult titles", example = "false")
     @NotNull

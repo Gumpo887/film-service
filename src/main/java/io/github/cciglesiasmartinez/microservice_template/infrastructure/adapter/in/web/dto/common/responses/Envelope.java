@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses;
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
