@@ -77,9 +77,9 @@ public class EditionController {
         return null;
     }
 
-    @Operation(summary = "Deletes an edition.", description = "Deletes a given picture by id.")
+    @Operation(summary = "Deletes a picture.", description = "Deletes a given picture by id.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Picture deleted."))
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/pictures/{id}")
     public ResponseEntity<Envelope<DeletePictureResponse>> deletePicture(@PathVariable String id) {
         return null;
     }
