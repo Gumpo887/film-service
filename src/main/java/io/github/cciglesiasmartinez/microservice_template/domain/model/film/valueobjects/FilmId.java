@@ -27,7 +27,7 @@ public class FilmId {
     /** Crea un FilmId desde texto (no nulo/ vacío y con formato UUID válido). */
     public static FilmId of(String filmId) {
         if (filmId == null || filmId.isBlank()) {
-            throw new IllegalArgumentException("FilmId can't be null or empty");
+            throw new IllegalArgumentException("FilmId can't be null or empty.");
         }
         // Valida que sea un UUID válido
         UUID.fromString(filmId);
