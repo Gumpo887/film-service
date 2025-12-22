@@ -25,8 +25,9 @@ public class EditionEntity implements Serializable {
     @EqualsAndHashCode.Include
     private String id;
 
-    @Column(nullable = false, name = "id_film")
-    private String filmId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "film_id", nullable = false)
+    private FilmEntity film;
 
     /*
         Information codes
@@ -78,9 +79,9 @@ public class EditionEntity implements Serializable {
      */
     @Column(name = "packaging_type")
     private String packagingType;
-
-    @Column(name = "case_dimensions")
-    private String caseDimensions;
+//
+//    @Column(name = "case_dimensions")
+//    private String caseDimensions;
 
     /*
         Special editions information
