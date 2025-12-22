@@ -47,8 +47,8 @@ public class EditionEntity implements Serializable {
     /*
         Edition information
      */
-    @Column(name = "edition_name")
-    private String editionName;
+//    @Column(name = "edition_name")
+//    private String editionName;
 
     @Column(name = "country")
     private String country;
