@@ -3,10 +3,7 @@ package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapte
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.CreateEditionRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.UpdateEditionRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.CreateEditionResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.DeleteEditionResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.GetEditionResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.UpdateEditionResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @RestController
@@ -58,6 +56,31 @@ public class EditionController {
     @PutMapping("")
     public ResponseEntity<Envelope<UpdateEditionResponse>> updateEdition(
             @Valid @RequestBody UpdateEditionRequest request) {
+        return null;
+    }
+
+    @Operation(summary = "Gets a picture.", description = "Gets the data for a given picture id.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "Picture retrieved successfully."))
+    @GetMapping("/pictures/{id}")
+    public ResponseEntity<Envelope<GetPictureResponse>> getPicture(@PathVariable String id ) {
+        return null;
+    }
+
+    @Operation(summary = "Uploads a picture.", description = "Uploads a picture for a given edition id.")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "Picture correctly uploaded."))
+    @PostMapping("/{id}/pictures")
+    public ResponseEntity<Envelope<CreatePictureResponse>> uploadPicture(
+            @PathVariable String editionId,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("type") String type
+    ) {
+        return null;
+    }
+
+    @Operation(summary = "Deletes an edition.", description = "Deletes a given picture by id.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "Picture deleted."))
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Envelope<DeletePictureResponse>> deletePicture(@PathVariable String id) {
         return null;
     }
 
