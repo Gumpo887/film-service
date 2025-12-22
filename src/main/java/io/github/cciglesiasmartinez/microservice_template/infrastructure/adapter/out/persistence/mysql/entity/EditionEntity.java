@@ -1,14 +1,13 @@
 package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.persistence.mysql.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.Year;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,17 +34,14 @@ public class EditionEntity implements Serializable {
     @Column(name = "barcode")
     private String barCode;
 
-    @Column(name = "upc_code")
-    private String upcCode;
-
-    @Column(name = "ean_code")
-    private String eanCode;
-
-    @Column(name = "catalogue_number")
-    private String catalogueNumber;
-
-    @Column(name = "asin")
-    private String asin;
+//    @Column(name = "upc_code")
+//    private String upcCode;
+//
+//    @Column(name = "ean_code")
+//    private String eanCode;
+//
+//    @Column(name = "catalogue_number")
+//    private String catalogueNumber;
 
     /*
         Edition information
@@ -59,33 +55,27 @@ public class EditionEntity implements Serializable {
     @Column(name = "format")
     private String format;
 
-    @Column(name = "region_code")
-    private String regionCode;
+//    @Column(name = "region_code")
+//    private String regionCode;
 
     /*
         Release information
      */
-    @Column(name = "release_date")
-    private Date releaseDate;
-
     @Column(name = "release_year")
     private Year releaseYear;
 
-    @Column(name = "distributor")
-    private String distributor;
-
-    @Column(name = "publisher")
-    private String publisher;
-
-    @Column(name = "out_of_print")
-    private boolean outOfPrint;
+//    @Column(name = "distributor")
+//    private String distributor;
+//
+//    @Column(name = "publisher")
+//    private String publisher;
+//
+//    @Column(name = "out_of_print")
+//    private boolean outOfPrint;
 
     /*
         Physical details
      */
-    @Column(name = "disc_count")
-    private int discCount;
-
     @Column(name = "packaging_type")
     private String packagingType;
 
@@ -95,41 +85,59 @@ public class EditionEntity implements Serializable {
     /*
         Special editions information
      */
-    @Column(name = "is_restored")
-    private boolean isRestoredVersion;
-
-    @Column(name = "is_directors_cut")
-    private boolean isDirectorsCutVersion;
-
-    @Column(name = "version_type")
-    private String versionType;
+//    @Column(name = "is_restored")
+//    private boolean isRestoredVersion;
+//
+//    @Column(name = "is_directors_cut")
+//    private boolean isDirectorsCutVersion;
+//
+//    @Column(name = "version_type")
+//    private String versionType;
 
     /*
         Images and media
      */
-    @Column(name = "cover_image_url")
-    private String coverImagenUrl;
+//    @Column(name = "cover_image_url")
+//    private String coverImagenUrl;
+//
+//    @Column(name = "back_cover_image_url")
+//    private String backCoverImageUrl;
+//
+//    @Column(name = "disc_image_url")
+//    private String discImageUrl;
 
-    @Column(name = "back_cover_image_url")
-    private String backCoverImageUrl;
-
-    @Column(name = "disc_image_url")
-    private String discImageUrl;
+    @OneToMany(
+            mappedBy = "edition",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<PictureEntity> pictures = new ArrayList<>();
 
     /*
         Metadata
      */
     @Column(name = "created_at")
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private String updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "verified")
     private boolean verified;
 
     @Column(name = "notes")
     private String notes;
+
+    /*
+        Media
+     */
+//    @OneToMany(
+//            mappedBy = "edition",
+//            cascade = CascadeType.ALL,
+//            orphanRemoval = true
+//    )
+//    private List<MediaEntity> medias = new ArrayList<>();
+
 
     // TODO: Review a refine all these fields.
 
