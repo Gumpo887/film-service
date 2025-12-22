@@ -1,6 +1,12 @@
 package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web;
 
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.responses.Envelope;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.CreateEditionRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.UpdateEditionRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.CreateEditionResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.DeleteEditionResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.GetEditionResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.UpdateEditionResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,14 +37,14 @@ public class EditionController {
         return null;
     }
 
-    @Operation(summary = "List editions (paged).")
-    @ApiResponses(@ApiResponse(responseCode ="200", description = "Editions retrieved successfully."))
-    @GetMapping
-    public ResponseEntity<Envelope<ListEditionsResponse>> listEditions(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        return null;
-    }
+//    @Operation(summary = "List editions (paged).")
+//    @ApiResponses(@ApiResponse(responseCode ="200", description = "Editions retrieved successfully."))
+//    @GetMapping
+//    public ResponseEntity<Envelope<ListEditionsResponse>> listEditions(
+//            @RequestParam(defaultValue = "0") int page,
+//            @RequestParam(defaultValue = "20") int size) {
+//        return null;
+//    }
 
     @Operation(summary = "Deletes an edition.", description = "Deletes an edition by its identifier.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Edition deleted successfully."))
