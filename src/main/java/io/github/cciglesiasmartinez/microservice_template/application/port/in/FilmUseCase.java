@@ -30,7 +30,7 @@ public interface FilmUseCase {
     
     Envelope<ListFilmsResponse> listFilms(int page, int size);
     
-    Envelope<TmdbDiscoverResponse> tmdbSearch(TmdbDiscoverRequest request);
+    Envelope<TmdbDiscoverResponse> tmdbDiscover(TmdbDiscoverRequest request);
 
     
 }

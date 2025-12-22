@@ -1,7 +1,6 @@
 package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web;
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.FilmUseCase;
-import io.github.cciglesiasmartinez.microservice_template.application.usecases.ListFilmsUseCase;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.CreateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.UpdateFilmRequest;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 public class FilmController {
 
     private final FilmUseCase filmUseCase;
-    private final ListFilmsUseCase listFilmsUseCase;
 
     @Operation(summary = "Retrieves a film.", description = "Retrieves a film given its identifier.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Film retrieved successfully."))
@@ -53,7 +51,7 @@ public class FilmController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-       Envelope<ListFilmsResponse> response = listFilmsUseCase.execute(page, size);
+       Envelope<ListFilmsResponse> response = filmUseCase.listFilms(page, size);
        return ResponseEntity.ok(response);
     }
 
@@ -77,7 +75,7 @@ public class FilmController {
     @ApiResponses(@ApiResponse(responseCode = "200", description = "TMDB results retrieved successfully."))
     @PostMapping("/tmdb")
     public ResponseEntity<Envelope<TmdbDiscoverResponse>> discoverTmdb(@Valid @RequestBody TmdbDiscoverRequest request) {
-        Envelope<TmdbDiscoverResponse> response = filmUseCase.tmdbSearch(request);
+        Envelope<TmdbDiscoverResponse> response = filmUseCase.tmdbDiscover(request);
         return ResponseEntity.ok(response);
     }
 

@@ -59,7 +59,7 @@ public class FilmUseCaseImpl implements FilmUseCase {
     }
 
 	@Override
-	public Envelope<TmdbDiscoverResponse> tmdbSearch(TmdbDiscoverRequest request) {
+	public Envelope<TmdbDiscoverResponse> tmdbDiscover(TmdbDiscoverRequest request) {
 		return tmdbDiscoverUseCase.execute(request);
 	}
 
