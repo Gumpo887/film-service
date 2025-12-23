@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "pictures")
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PictureEntity {
 

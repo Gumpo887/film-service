@@ -53,4 +53,8 @@ public class Picture {
     ) {
         return new Picture(id, url, uploadedAt);
     }
+
+    public PictureId id() { return this.id; }
+    public Url url() { return this.url; }
+    public LocalDateTime uploadedAt() { return this.uploadedAt; }
 }
