@@ -24,6 +24,7 @@ import java.util.List;
 /**
  * Create edition use case.
  *
+ * TODO: We need a strong strategy against dupes. Probably we'll want a draft strategy.
  */
 @Service
 @AllArgsConstructor
