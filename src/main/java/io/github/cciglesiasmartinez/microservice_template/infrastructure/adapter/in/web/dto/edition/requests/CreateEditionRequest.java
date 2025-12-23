@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Year;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -17,7 +15,7 @@ public class CreateEditionRequest {
     private String barCode;
     private String country;
     private String format;
-    private Year releaseYear;
+    private int releaseYear;
     private String packagingType;
     private String notes;
 
