@@ -1,5 +1,7 @@
 package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.persistence.mysql.entity;
 
+import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.valueobjects.Format;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.valueobjects.PackagingType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -55,7 +57,7 @@ public class EditionEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "format")
-    private String format;
+    private Format format;
 
 //    @Column(name = "region_code")
 //    private String regionCode;
@@ -80,7 +82,7 @@ public class EditionEntity implements Serializable {
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "packaging_type")
-    private String packagingType;
+    private PackagingType packagingType;
 //
 //    @Column(name = "case_dimensions")
 //    private String caseDimensions;
