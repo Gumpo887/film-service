@@ -1,5 +1,6 @@
 package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web;
 
+import io.github.cciglesiasmartinez.microservice_template.application.port.in.EditionUseCase;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.CreateEditionRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.UpdateEditionRequest;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/edition")
 @Tag(name = "Edition service.", description = "Endpoints related to Edition entity.")
 public class EditionController {
+
+    private final EditionUseCase editionUseCase;
 
     @Operation(summary = "Retrieves an edition.", description = "Retrieves an edition given its identifier.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Edition retrieved successfully."))
@@ -32,7 +36,8 @@ public class EditionController {
     @PostMapping("")
     public ResponseEntity<Envelope<CreateEditionResponse>> createEdition(
             @Valid @RequestBody CreateEditionRequest request) {
-        return null;
+        Envelope<CreateEditionResponse> response = editionUseCase.createEdition(request);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
 //    @Operation(summary = "List editions (paged).")
