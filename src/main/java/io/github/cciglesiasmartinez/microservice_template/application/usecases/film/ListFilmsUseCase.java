@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.application.usecases;
+package io.github.cciglesiasmartinez.microservice_template.application.usecases.film;
 
 import java.util.List;
 

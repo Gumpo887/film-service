@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.application.usecases;
+package io.github.cciglesiasmartinez.microservice_template.application.usecases.film;
 
 import io.github.cciglesiasmartinez.microservice_template.domain.exception.WrongFilmIdException;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.film.Film;

@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.application.usecases;
+package io.github.cciglesiasmartinez.microservice_template.application.usecases.film;
 
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.TmdbDiscoverRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;

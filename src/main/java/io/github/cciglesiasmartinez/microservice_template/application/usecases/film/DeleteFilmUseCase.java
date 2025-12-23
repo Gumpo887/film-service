@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.application.usecases;
+package io.github.cciglesiasmartinez.microservice_template.application.usecases.film;
 
 import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.FilmId;
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRepository;

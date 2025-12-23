@@ -1,6 +1,6 @@
-package io.github.cciglesiasmartinez.microservice_template.application;
+package io.github.cciglesiasmartinez.microservice_template.application.usecases;
 
-import io.github.cciglesiasmartinez.microservice_template.application.usecases.*;
+import io.github.cciglesiasmartinez.microservice_template.application.usecases.film.*;
 import org.springframework.stereotype.Service;
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.FilmUseCase;
