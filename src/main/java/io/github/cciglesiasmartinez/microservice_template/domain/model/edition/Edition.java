@@ -3,10 +3,14 @@ package io.github.cciglesiasmartinez.microservice_template.domain.model.edition;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.valueobjects.*;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.film.Film;
 
+import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.List;
 
 /**
  * Represents an edition within the system.
+ * <p>
+ * This works as an aggregate root with {@link Picture} domain entity.
  */
 public class Edition {
 
@@ -18,6 +22,7 @@ public class Edition {
     private Year releaseYear;
     private PackagingType packagingType;
     private Notes notes;
+    private List<Picture> pictures;
 
     private Edition(
             EditionId id,
@@ -27,7 +32,8 @@ public class Edition {
             Format format,
             Year releaseYear,
             PackagingType packagingType,
-            Notes notes
+            Notes notes,
+            List<Picture> pictures
     ) {
         this.id = id;
         this.film = film;
@@ -37,6 +43,7 @@ public class Edition {
         this.releaseYear = releaseYear;
         this.packagingType = packagingType;
         this.notes = notes;
+        this.pictures = pictures;
     }
 
     /**
@@ -49,6 +56,7 @@ public class Edition {
      * @param releaseYear
      * @param packagingType
      * @param notes
+     * @param pictures
      * @return
      */
     public static Edition create(
@@ -58,9 +66,20 @@ public class Edition {
             Format format,
             Year releaseYear,
             PackagingType packagingType,
-            Notes notes
+            Notes notes,
+            List<Picture> pictures
     ) {
-        return new Edition(EditionId.generate(), film, barCode, country, format, releaseYear, packagingType, notes);
+        return new Edition(
+                EditionId.generate(),
+                film,
+                barCode,
+                country,
+                format,
+                releaseYear,
+                packagingType,
+                notes,
+                pictures
+        );
     }
 
     /**
@@ -74,6 +93,7 @@ public class Edition {
      * @param releaseYear
      * @param packagingType
      * @param notes
+     * @param pictures
      * @return
      */
     public static Edition of(
@@ -84,9 +104,26 @@ public class Edition {
             Format format,
             Year releaseYear,
             PackagingType packagingType,
-            Notes notes
+            Notes notes,
+            List<Picture> pictures
     ) {
-        return new Edition(id, film, barCode, country, format, releaseYear, packagingType, notes);
+        return new Edition(id, film, barCode, country, format, releaseYear, packagingType, notes, pictures);
+    }
+
+    /**
+     *
+     * @param url
+     */
+    public void addPicture(Url url) {
+        pictures.add(Picture.create(url, LocalDateTime.now()));
+    }
+
+    /**
+     *
+     * @param pictureId
+     */
+    public void removePicture(PictureId pictureId) {
+        pictures.removeIf(p -> p.id().equals(pictureId));
     }
 
     public EditionId editionId() { return this.id; }
@@ -97,4 +134,5 @@ public class Edition {
     public Year releaseYear() { return this.releaseYear; }
     public PackagingType packagingType() { return this.packagingType; }
     public Notes notes() { return this.notes; }
+    public List<Picture> pictures() { return this.pictures; }
 }
