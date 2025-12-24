@@ -27,6 +27,6 @@ public class GetEditionResponse {
     private boolean verified;
     private String notes;
 
-    private List<GetPictureResponse> pictures;
+    private List<?> pictures;
 
 }

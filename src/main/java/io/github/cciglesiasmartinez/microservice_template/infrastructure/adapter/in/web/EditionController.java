@@ -28,7 +28,8 @@ public class EditionController {
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Edition retrieved successfully."))
     @GetMapping("/{id}")
     public ResponseEntity<Envelope<GetEditionResponse>> getEdition(@PathVariable String id) {
-        return null;
+        Envelope<GetEditionResponse> response = editionUseCase.getEdition(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "Creates a new edition.", description = "Creates a new edition with provided data.")
