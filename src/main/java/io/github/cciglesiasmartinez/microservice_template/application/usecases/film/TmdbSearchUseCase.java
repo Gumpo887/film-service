@@ -3,9 +3,9 @@ package io.github.cciglesiasmartinez.microservice_template.application.usecases.
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Meta;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbSearchRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbListResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbFilmListResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.wrappers.TmdbVideoWrapper;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbVideosResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbVideoListResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -29,13 +29,13 @@ public class TmdbSearchUseCase {
         if (movieId == null) {
             return null;
         }
-        TmdbVideosResponse videosResponse = tmdbWebClient.get()
+        TmdbVideoListResponse videosResponse = tmdbWebClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/movie/{movieId}/videos")
                         .queryParam("language", language)
                         .build(movieId))
                 .retrieve()
-                .bodyToMono(TmdbVideosResponse.class)
+                .bodyToMono(TmdbVideoListResponse.class)
                 .block();
 
         if (videosResponse == null) {
@@ -71,8 +71,8 @@ public class TmdbSearchUseCase {
      * @param request
      * @return
      */
-    public Envelope<TmdbListResponse> execute(TmdbSearchRequest request) {
-        TmdbListResponse response = tmdbWebClient.get()
+    public Envelope<TmdbFilmListResponse> execute(TmdbSearchRequest request) {
+        TmdbFilmListResponse response = tmdbWebClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/search/movie")
                         .queryParam("query", request.getQuery())
@@ -84,7 +84,7 @@ public class TmdbSearchUseCase {
                         .queryParam("year", request.getYear())
                         .build())
                 .retrieve()
-                .bodyToMono(TmdbListResponse.class)
+                .bodyToMono(TmdbFilmListResponse.class)
                 .block();
         if (response != null && response.getResults() != null) {
             response.getResults().forEach(

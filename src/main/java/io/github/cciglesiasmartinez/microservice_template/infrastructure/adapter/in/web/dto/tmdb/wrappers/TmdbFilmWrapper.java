@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TmdbMovieWrapper {
+public class TmdbFilmWrapper {
 
     private Integer id;
     private String title;

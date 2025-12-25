@@ -10,7 +10,7 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.UpdateFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.listfilmsresponse.ListFilmsResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbSearchRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbListResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbFilmListResponse;
 
 public interface FilmUseCase {
 	
@@ -30,8 +30,8 @@ public interface FilmUseCase {
     Envelope<DeleteFilmResponse> deleteFilm(String id);
 
     // TMDB API integration
-    Envelope<TmdbListResponse> tmdbDiscover(TmdbDiscoverRequest request);
-    Envelope<TmdbListResponse> tmdbSearch(TmdbSearchRequest request);
+    Envelope<TmdbFilmListResponse> tmdbDiscover(TmdbDiscoverRequest request);
+    Envelope<TmdbFilmListResponse> tmdbSearch(TmdbSearchRequest request);
 
     
 }

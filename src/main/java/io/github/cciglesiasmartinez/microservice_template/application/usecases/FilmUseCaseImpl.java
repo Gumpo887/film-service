@@ -14,7 +14,7 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.GetFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.UpdateFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.listfilmsresponse.ListFilmsResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbListResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbFilmListResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,12 +58,12 @@ public class FilmUseCaseImpl implements FilmUseCase {
     }
 
 	@Override
-	public Envelope<TmdbListResponse> tmdbDiscover(TmdbDiscoverRequest request) {
+	public Envelope<TmdbFilmListResponse> tmdbDiscover(TmdbDiscoverRequest request) {
 		return tmdbDiscoverUseCase.execute(request);
 	}
 
     @Override
-    public Envelope<TmdbListResponse> tmdbSearch(TmdbSearchRequest request) {
+    public Envelope<TmdbFilmListResponse> tmdbSearch(TmdbSearchRequest request) {
         return tmdbSearchUseCase.execute(request);
     }
 

@@ -3,9 +3,9 @@ package io.github.cciglesiasmartinez.microservice_template.application.usecases.
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbDiscoverRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Meta;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbListResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbFilmListResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.wrappers.TmdbVideoWrapper;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbVideosResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbVideoListResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,8 +17,8 @@ public class TmdbDiscoverUseCase {
 
     private final WebClient tmdbWebClient;
 
-    public Envelope<TmdbListResponse> execute(TmdbDiscoverRequest request) {
-        TmdbListResponse response = tmdbWebClient.get()
+    public Envelope<TmdbFilmListResponse> execute(TmdbDiscoverRequest request) {
+        TmdbFilmListResponse response = tmdbWebClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/discover/movie")
                         .queryParam("include_adult", request.getIncludeAdult())
@@ -28,7 +28,7 @@ public class TmdbDiscoverUseCase {
                         .queryParam("sort_by", request.getSortBy())
                         .build())
                 .retrieve()
-                .bodyToMono(TmdbListResponse.class)
+                .bodyToMono(TmdbFilmListResponse.class)
                 .block();
 
         if (response != null && response.getResults() != null) {
@@ -42,13 +42,13 @@ public class TmdbDiscoverUseCase {
         if (movieId == null) {
             return null;
         }
-        TmdbVideosResponse videosResponse = tmdbWebClient.get()
+        TmdbVideoListResponse videosResponse = tmdbWebClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/movie/{movieId}/videos")
                         .queryParam("language", language)
                         .build(movieId))
                 .retrieve()
-                .bodyToMono(TmdbVideosResponse.class)
+                .bodyToMono(TmdbVideoListResponse.class)
                 .block();
 
         if (videosResponse == null) {
