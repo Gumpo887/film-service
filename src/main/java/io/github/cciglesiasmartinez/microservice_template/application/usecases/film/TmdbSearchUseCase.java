@@ -41,7 +41,6 @@ public class TmdbSearchUseCase {
         if (videosResponse == null) {
             return null;
         }
-
         return extractTrailerKey(videosResponse.getResults());
     }
 
