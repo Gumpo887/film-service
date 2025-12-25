@@ -1,19 +1,20 @@
 package io.github.cciglesiasmartinez.microservice_template.application.usecases;
 
 import io.github.cciglesiasmartinez.microservice_template.application.usecases.film.*;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbSearchRequest;
 import org.springframework.stereotype.Service;
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.FilmUseCase;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.CreateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.UpdateFilmRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.TmdbDiscoverRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbDiscoverRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.CreateFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.DeleteFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.GetFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.UpdateFilmResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.listfilmsresponse.ListFilmsResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbDiscoverResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbListResponse;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,9 +26,7 @@ public class FilmUseCaseImpl implements FilmUseCase {
 	
     private final ListFilmsUseCase listFilmsUseCase;
     private final TmdbDiscoverUseCase tmdbDiscoverUseCase;
-
-    // TODO: Refactor these usecases, give each one a class then inject them here via constructor
-
+    private final TmdbSearchUseCase tmdbSearchUseCase;
     private final CreateFilmUseCase createFilmUseCase;
     private final GetFilmUseCase getFilmUseCase;
     private final UpdateFilmUseCase updateFilmUseCase;
@@ -59,9 +58,14 @@ public class FilmUseCaseImpl implements FilmUseCase {
     }
 
 	@Override
-	public Envelope<TmdbDiscoverResponse> tmdbDiscover(TmdbDiscoverRequest request) {
+	public Envelope<TmdbListResponse> tmdbDiscover(TmdbDiscoverRequest request) {
 		return tmdbDiscoverUseCase.execute(request);
 	}
+
+    @Override
+    public Envelope<TmdbListResponse> tmdbSearch(TmdbSearchRequest request) {
+        return tmdbSearchUseCase.execute(request);
+    }
 
 }
 

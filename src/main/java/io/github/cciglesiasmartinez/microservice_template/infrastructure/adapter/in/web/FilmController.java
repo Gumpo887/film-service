@@ -4,10 +4,11 @@ import io.github.cciglesiasmartinez.microservice_template.application.port.in.Fi
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.CreateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.UpdateFilmRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.TmdbDiscoverRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbDiscoverRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.*;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.listfilmsresponse.ListFilmsResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbDiscoverResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbSearchRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -73,9 +74,17 @@ public class FilmController {
     
     @Operation(summary = "Discover TMDB films.", description = "Call TMDB discover/movie using the provided filters.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "TMDB results retrieved successfully."))
-    @PostMapping("/tmdb")
-    public ResponseEntity<Envelope<TmdbDiscoverResponse>> discoverTmdb(@Valid @RequestBody TmdbDiscoverRequest request) {
-        Envelope<TmdbDiscoverResponse> response = filmUseCase.tmdbDiscover(request);
+    @PostMapping("/tmdb/discover")
+    public ResponseEntity<Envelope<TmdbListResponse>> discoverTmdb(@Valid @RequestBody TmdbDiscoverRequest request) {
+        Envelope<TmdbListResponse> response = filmUseCase.tmdbDiscover(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "Search TMDB films.", description = "Call TMDB search using provided data.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "TMDB results retrieved successfully."))
+    @PostMapping("/tmdb/search")
+    public ResponseEntity<Envelope<TmdbListResponse>> searchTmdb(@Valid @RequestBody TmdbSearchRequest request) {
+        Envelope<TmdbListResponse> response = filmUseCase.tmdbSearch(request);
         return ResponseEntity.ok(response);
     }
 

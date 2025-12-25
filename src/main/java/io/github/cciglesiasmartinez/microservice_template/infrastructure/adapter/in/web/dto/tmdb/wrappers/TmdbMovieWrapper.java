@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses;
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.wrappers;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
@@ -8,7 +8,8 @@ import lombok.Data;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TmdbMovie {
+public class TmdbMovieWrapper {
+
     private Integer id;
     private String title;
     private String overview;
@@ -16,4 +17,5 @@ public class TmdbMovie {
     private String releaseDate;
     private Double voteAverage;
     private String trailerKey;
+
 }

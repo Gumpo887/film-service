@@ -1,43 +1,30 @@
 package io.github.cciglesiasmartinez.microservice_template.application.usecases.film;
 
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbDiscoverRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Meta;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbSearchRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbListResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.wrappers.TmdbVideoWrapper;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbVideosResponse;
-import java.util.List;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+
 @Service
-@RequiredArgsConstructor
-public class TmdbDiscoverUseCase {
+@AllArgsConstructor
+public class TmdbSearchUseCase {
 
     private final WebClient tmdbWebClient;
 
-    public Envelope<TmdbListResponse> execute(TmdbDiscoverRequest request) {
-        TmdbListResponse response = tmdbWebClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/discover/movie")
-                        .queryParam("include_adult", request.getIncludeAdult())
-                        .queryParam("include_video", request.getIncludeVideo())
-                        .queryParam("language", request.getLanguage())
-                        .queryParam("page", request.getPage())
-                        .queryParam("sort_by", request.getSortBy())
-                        .build())
-                .retrieve()
-                .bodyToMono(TmdbListResponse.class)
-                .block();
-
-        if (response != null && response.getResults() != null) {
-            response.getResults().forEach(movie -> movie.setTrailerKey(fetchTrailerKey(movie.getId(), request.getLanguage())));
-        }
-
-        return new Envelope<>(response, new Meta());
-    }
-
+    /**
+     * Helper method.
+     *
+     * @param movieId
+     * @param language
+     * @return
+     */
     private String fetchTrailerKey(Integer movieId, String language) {
         if (movieId == null) {
             return null;
@@ -58,6 +45,12 @@ public class TmdbDiscoverUseCase {
         return extractTrailerKey(videosResponse.getResults());
     }
 
+    /**
+     * Helper method.
+     *
+     * @param videos
+     * @return
+     */
     private String extractTrailerKey(List<TmdbVideoWrapper> videos) {
         if (videos == null) {
             return null;
@@ -71,4 +64,34 @@ public class TmdbDiscoverUseCase {
                 .map(TmdbVideoWrapper::getKey)
                 .orElse(null);
     }
+
+    /**
+     * Executes TMDB Search use case.
+     *
+     * @param request
+     * @return
+     */
+    public Envelope<TmdbListResponse> execute(TmdbSearchRequest request) {
+        TmdbListResponse response = tmdbWebClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/search/movie")
+                        .queryParam("query", request.getQuery())
+                        .queryParam("include_adult", request.getIncludeAdult())
+                        .queryParam("language", request.getLanguage())
+                        .queryParam("primary_release", request.getPrimaryReleaseYear())
+                        .queryParam("page", request.getPage())
+                        .queryParam("region", request.getRegion())
+                        .queryParam("year", request.getYear())
+                        .build())
+                .retrieve()
+                .bodyToMono(TmdbListResponse.class)
+                .block();
+        if (response != null && response.getResults() != null) {
+            response.getResults().forEach(
+                    movie -> movie.setTrailerKey(fetchTrailerKey(movie.getId(), request.getLanguage()))
+            );
+        }
+        return new Envelope<>(response, new Meta());
+    }
+
 }

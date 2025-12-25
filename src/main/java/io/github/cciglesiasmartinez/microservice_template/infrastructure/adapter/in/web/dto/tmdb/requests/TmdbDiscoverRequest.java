@@ -1,4 +1,4 @@
-package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests;
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
