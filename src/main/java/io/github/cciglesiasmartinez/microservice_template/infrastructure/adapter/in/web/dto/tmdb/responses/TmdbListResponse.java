@@ -11,8 +11,10 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TmdbListResponse {
+
     private Integer page;
     private List<TmdbMovieWrapper> results;
     private Integer totalPages;
     private Integer totalResults;
+
 }
