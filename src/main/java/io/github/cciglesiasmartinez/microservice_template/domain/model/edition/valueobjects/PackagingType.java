@@ -2,11 +2,11 @@ package io.github.cciglesiasmartinez.microservice_template.domain.model.edition.
 
 public enum PackagingType {
 
-    AMARAY,        // Standard case
-    SLIPCASE,     // Standard with slipcase
-    STEELBOOK,    // Metallic case
-    DIGIPAK,      // Cardboard case
-    MEDIABOOK,    // Like a book
-    BOX_SET       // Box set (may contain AMARAY or others inside)
+    Amaray,        // Standard case
+    Slipcase,     // Standard with slipcase
+    Steelbook,    // Metallic case
+    Digipak,      // Cardboard case
+    Mediabook,    // Like a book
+    Box_set       // Box set (may contain AMARAY or others inside)
 
 }
