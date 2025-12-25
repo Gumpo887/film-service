@@ -55,7 +55,6 @@ public class TmdbSearchUseCase {
         if (videos == null) {
             return null;
         }
-
         return videos.stream()
                 .filter(video -> Boolean.TRUE.equals(video.getOfficial()))
                 .filter(video -> "youtube".equalsIgnoreCase(video.getSite()))
