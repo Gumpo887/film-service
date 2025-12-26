@@ -2,6 +2,7 @@ package io.github.cciglesiasmartinez.microservice_template.application.usecases.
 
 import java.util.List;
 
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.ListGenericResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,7 @@ import io.github.cciglesiasmartinez.microservice_template.domain.port.out.FilmRe
 import io.github.cciglesiasmartinez.microservice_template.domain.shared.PageResult;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Meta;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.listfilmsresponse.FilmInfo;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.listfilmsresponse.ListFilmsResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.wrappers.FilmInfoWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,12 +25,12 @@ public class ListFilmsUseCase {
     @Value("${app.api-base-path:/films}")
     private String basePath;
 
-    public Envelope<ListFilmsResponse> execute(int page, int size) {
+    public Envelope<ListGenericResponse> execute(int page, int size) {
         PageResult<Film> pr = filmRepository.findPage(page, size);
 
         // Map Domain -> DTO (resumen para listados)
-        List<FilmInfo> items = pr.content().stream()
-                .map(f -> new FilmInfo(
+        List<FilmInfoWrapper> items = pr.content().stream()
+                .map(f -> new FilmInfoWrapper(
                         f.itemId().value(),
                         f.title().value(),
                         f.releaseYear().value(),
@@ -48,7 +48,7 @@ public class ListFilmsUseCase {
         String nextLink    = pr.hasNext()     ? link(pr.page() + 1, pr.size()) : null;
         String prevLink    = pr.hasPrevious() ? link(Math.max(pr.page() - 1, 0), pr.size()) : null;
 
-        ListFilmsResponse data = new ListFilmsResponse(
+        ListGenericResponse data = new ListGenericResponse(
                 items,
                 pr.page(),
                 pr.size(),
