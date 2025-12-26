@@ -3,8 +3,12 @@ package io.github.cciglesiasmartinez.microservice_template.domain.model.edition.
 public enum Format {
 
     DVD(480),
-    BLURAY(1080),
-    UHD_4K(2160);
+    BluRay(1080),
+    UHD_4K(2160),
+    VHS(0),
+    Laser_Disc(0),
+    HDDVD(0),
+    Betamax(0);
 
     private final int maxResolution;
 
