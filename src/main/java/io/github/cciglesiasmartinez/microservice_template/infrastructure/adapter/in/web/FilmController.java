@@ -4,9 +4,9 @@ import io.github.cciglesiasmartinez.microservice_template.application.port.in.Fi
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.CreateFilmRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.requests.UpdateFilmRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.ListGenericResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbDiscoverRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.*;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.listfilmsresponse.ListFilmsResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.requests.TmdbSearchRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.tmdb.responses.TmdbFilmListResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,11 +48,11 @@ public class FilmController {
     @Operation(summary = "List films (paged).")
     @ApiResponses(@ApiResponse(responseCode ="200", description = "films retrieved successfully."))
     @GetMapping
-    public ResponseEntity<Envelope<ListFilmsResponse>> listFilms(
+    public ResponseEntity<Envelope<ListGenericResponse>> listFilms(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
     ) {
-       Envelope<ListFilmsResponse> response = filmUseCase.listFilms(page, size);
+       Envelope<ListGenericResponse> response = filmUseCase.listFilms(page, size);
        return ResponseEntity.ok(response);
     }
 
