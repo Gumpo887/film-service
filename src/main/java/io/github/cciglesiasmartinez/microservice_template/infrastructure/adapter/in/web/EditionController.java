@@ -2,9 +2,11 @@ package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapte
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.EditionUseCase;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.ListGenericResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.CreateEditionRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.UpdateEditionRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.*;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.wrappers.EditionWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -41,21 +43,22 @@ public class EditionController {
         return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
-//    @Operation(summary = "List editions (paged).")
-//    @ApiResponses(@ApiResponse(responseCode ="200", description = "Editions retrieved successfully."))
-//    @GetMapping
-//    public ResponseEntity<Envelope<ListEditionsResponse>> listEditions(
-//            @RequestParam(defaultValue = "0") int page,
-//            @RequestParam(defaultValue = "20") int size) {
-//        return null;
-//    }
+    @Operation(summary = "List editions (paged).")
+    @ApiResponses(@ApiResponse(responseCode ="200", description = "Editions retrieved successfully."))
+    @GetMapping
+    public ResponseEntity<Envelope<ListGenericResponse<EditionWrapper>>> listEditions(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        Envelope<ListGenericResponse<EditionWrapper>> response = editionUseCase.listAllEditions(page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     @Operation(summary = "Deletes an edition.", description = "Deletes an edition by its identifier.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Edition deleted successfully."))
     @DeleteMapping("/{id}")
     public ResponseEntity<Envelope<DeleteEditionResponse>> deleteEdition(@PathVariable String id) {
         Envelope<DeleteEditionResponse> response = editionUseCase.deleteFilmById(id);
-        return null;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "Updates an edition.", description = "Updates information on a given edition.")
