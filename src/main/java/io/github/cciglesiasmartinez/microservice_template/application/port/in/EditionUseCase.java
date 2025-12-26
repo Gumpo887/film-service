@@ -4,9 +4,9 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.CreateEditionRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.UpdateEditionRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.CreateEditionResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.DeleteEditionResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.GetEditionResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.UpdateEditionResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.film.responses.DeleteFilmResponse;
 
 public interface EditionUseCase {
 
@@ -20,6 +20,6 @@ public interface EditionUseCase {
     Envelope<UpdateEditionResponse> updateEdition(UpdateEditionRequest request);
 
     // Delete
-    Envelope<DeleteFilmResponse> deleteFilmById(String id);
+    Envelope<DeleteEditionResponse> deleteFilmById(String id);
 
 }

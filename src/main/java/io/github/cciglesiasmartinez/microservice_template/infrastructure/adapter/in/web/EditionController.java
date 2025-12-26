@@ -54,6 +54,7 @@ public class EditionController {
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Edition deleted successfully."))
     @DeleteMapping("/{id}")
     public ResponseEntity<Envelope<DeleteEditionResponse>> deleteEdition(@PathVariable String id) {
+        Envelope<DeleteEditionResponse> response = editionUseCase.deleteFilmById(id);
         return null;
     }
 
