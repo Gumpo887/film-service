@@ -32,9 +32,12 @@ public class UpdateFilmUseCase {
                 .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
 
         Title title = request.getTitle() != null ? Title.of(request.getTitle()) : existing.title();
-        Description description = request.getDescription() != null ? Description.of(request.getDescription()) : existing.description();
-        ReleaseYear releaseYear = request.getReleaseYear() != null ? ReleaseYear.of(request.getReleaseYear()) : existing.releaseYear();
-        ProducingCountry producingCountry = request.getProducingCountry() != null ? ProducingCountry.of(request.getProducingCountry()) : existing.producingCountry();
+        Description description = request.getDescription() != null
+                ? Description.of(request.getDescription()) : existing.description();
+        ReleaseYear releaseYear = request.getReleaseYear() != null
+                ? ReleaseYear.of(request.getReleaseYear()) : existing.releaseYear();
+        ProducingCountry producingCountry = request.getProducingCountry() != null
+                ? ProducingCountry.of(request.getProducingCountry()) : existing.producingCountry();
         Rating rating = request.getRating() != null ? Rating.of(request.getRating()) : existing.rating();
         Poster poster = request.getPoster() != null ? Poster.of(request.getPoster()) : existing.poster();
 
