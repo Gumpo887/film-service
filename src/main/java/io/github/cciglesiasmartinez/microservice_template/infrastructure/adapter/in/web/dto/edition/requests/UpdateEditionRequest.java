@@ -13,6 +13,7 @@ import java.time.Year;
 @Setter
 public class UpdateEditionRequest {
 
+    private String id;
     private String barCode;
     private String country;
     private String format;

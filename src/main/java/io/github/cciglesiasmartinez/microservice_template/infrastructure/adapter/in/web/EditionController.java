@@ -62,7 +62,8 @@ public class EditionController {
     @PutMapping("")
     public ResponseEntity<Envelope<UpdateEditionResponse>> updateEdition(
             @Valid @RequestBody UpdateEditionRequest request) {
-        return null;
+        Envelope<UpdateEditionResponse> response = editionUseCase.updateEdition(request);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
     @Operation(summary = "Gets a picture.", description = "Gets the data for a given picture id.")
