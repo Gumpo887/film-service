@@ -59,9 +59,12 @@ public class EditionRepositoryImpl implements EditionRepository {
     @Override
     @Transactional
     public Edition update(Edition edition) {
-        EditionEntity saved = springDataEditionRepository.save(editionEntityMapper.toEntity(edition));
-        return editionEntityMapper.toDomain(saved);
+        EditionEntity entity = springDataEditionRepository
+                .findById(edition.editionId().value()) // Updates through dirty checking
+                .orElseThrow();
+        return editionEntityMapper.updateEntity(entity, edition);
     }
+
 
     @Override
     public Edition save(Edition edition) {
