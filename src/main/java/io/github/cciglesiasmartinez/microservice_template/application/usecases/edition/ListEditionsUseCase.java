@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class ListEditionsUseCase {
 
-    @Value("${app.api-base-path:/films}")
+    @Value("${app.api-base-path:/editions}")
     private String basePath;
 
     private final EditionRepository editionRepository;
