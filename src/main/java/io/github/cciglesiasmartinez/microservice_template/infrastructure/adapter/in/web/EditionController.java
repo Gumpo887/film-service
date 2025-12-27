@@ -81,11 +81,12 @@ public class EditionController {
     @ApiResponses(@ApiResponse(responseCode = "201", description = "Picture correctly uploaded."))
     @PostMapping("/{id}/pictures")
     public ResponseEntity<Envelope<CreatePictureResponse>> uploadPicture(
-            @PathVariable String editionId,
+            @PathVariable String id,
             @RequestParam("file") MultipartFile file,
             @RequestParam("type") String type
     ) {
-        return null;
+        Envelope<CreatePictureResponse> response = editionUseCase.addPicture(id, file, type);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "Deletes a picture.", description = "Deletes a given picture by id.")

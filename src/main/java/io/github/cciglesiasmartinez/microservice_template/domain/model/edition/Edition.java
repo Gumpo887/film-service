@@ -114,8 +114,10 @@ public class Edition {
      *
      * @param url
      */
-    public void addPicture(Url url) {
-        pictures.add(Picture.create(url, LocalDateTime.now()));
+    public Picture addPicture(Url url) {
+        Picture picture = Picture.create(url, this,LocalDateTime.now());
+        pictures.add(picture);
+        return picture;
     }
 
     /**

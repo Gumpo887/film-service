@@ -7,5 +7,6 @@ public interface EditionEntityMapper {
 
     Edition toDomain(EditionEntity entity);
     EditionEntity toEntity(Edition edition);
+    Edition updateEntity(EditionEntity entity, Edition edition);
 
 }

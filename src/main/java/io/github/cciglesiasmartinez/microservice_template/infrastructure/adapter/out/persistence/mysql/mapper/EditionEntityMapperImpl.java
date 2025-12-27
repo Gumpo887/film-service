@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Component
@@ -22,28 +24,30 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
         return Picture.of(
                 PictureId.of(entity.getId()),
                 Url.of(entity.getUrl()),
+                null,
                 entity.getUploadedAt()
         );
     }
 
-    private PictureEntity toEntity(Picture picture) {
+    private PictureEntity toEntity(Picture picture, EditionEntity editionEntity) {
         PictureEntity entity = new PictureEntity();
         entity.setId(picture.id().value());
         entity.setUrl(picture.url().value());
         entity.setUploadedAt(picture.uploadedAt());
+        entity.setEdition(editionEntity);
         return entity;
     }
 
     private List<Picture> toDomainPictures(List<PictureEntity> entities) {
         return entities.stream()
                 .map(this::toDomain)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private List<PictureEntity> toEntityPictures(List<Picture> pictures) {
+    private List<PictureEntity> toEntityPictures(List<Picture> pictures, EditionEntity editionEntity) {
         return pictures.stream()
-                .map(this::toEntity)
-                .toList();
+                .map(p -> toEntity(p, editionEntity))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @Override
@@ -67,7 +71,6 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
     public EditionEntity toEntity(Edition edition) {
         if (edition == null) return null;
         FilmEntity filmEntity = filmEntityMapper.toEntity(edition.film());
-        List<PictureEntity> pictureEntities = this.toEntityPictures(edition.pictures());
         EditionEntity entity = new EditionEntity();
         entity.setId(edition.editionId().value());
         entity.setFilm(filmEntity);
@@ -77,7 +80,34 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
         entity.setReleaseYear(edition.releaseYear());
         entity.setPackagingType(edition.packagingType());
         entity.setNotes(edition.notes().value());
+        List<PictureEntity> pictureEntities = this.toEntityPictures(edition.pictures(), entity);
         entity.setPictures(pictureEntities);
+        System.out.println(pictureEntities.getFirst() + " ESTO ES ENTITY");
         return entity;
+    }
+
+    @Override
+    public Edition updateEntity(EditionEntity entity, Edition edition) {
+
+        // campos simples
+        entity.setBarCode(edition.barCode().value());
+        entity.setCountry(edition.country().value());
+        entity.setFormat(edition.format());
+        entity.setReleaseYear(edition.releaseYear());
+        entity.setPackagingType(edition.packagingType());
+        entity.setNotes(edition.notes().value());
+
+        // 🔥 MUY IMPORTANTE
+        entity.getPictures().clear();
+
+        for (Picture picture : edition.pictures()) {
+            PictureEntity pe = new PictureEntity();
+            pe.setId(picture.id().value());
+            pe.setUrl(picture.url().value());
+            pe.setUploadedAt(picture.uploadedAt());
+            pe.setEdition(entity);              // owning side
+            entity.getPictures().add(pe);     // colección managed
+        }
+        return toDomain(entity);
     }
 }

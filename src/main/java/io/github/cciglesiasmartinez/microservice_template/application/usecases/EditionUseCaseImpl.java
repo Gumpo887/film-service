@@ -6,14 +6,12 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.ListGenericResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.CreateEditionRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.requests.UpdateEditionRequest;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.CreateEditionResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.DeleteEditionResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.GetEditionResponse;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.UpdateEditionResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.*;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.wrappers.EditionWrapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @AllArgsConstructor
@@ -25,10 +23,16 @@ public class EditionUseCaseImpl implements EditionUseCase {
     private final UpdateEditionUseCase updateEditionUseCase;
     private final DeleteEditionUseCase deleteEditionUseCase;
     private final ListEditionsUseCase listEditionsUseCase;
+    private final AddPictureUseCase addPictureUseCase;
 
     @Override
     public Envelope<CreateEditionResponse> createEdition(CreateEditionRequest request) {
         return createEditionUseCase.execute(request);
+    }
+
+    @Override
+    public Envelope<CreatePictureResponse> addPicture(String editionId, MultipartFile file, String type) {
+        return addPictureUseCase.execute(editionId, file, type);
     }
 
     @Override
