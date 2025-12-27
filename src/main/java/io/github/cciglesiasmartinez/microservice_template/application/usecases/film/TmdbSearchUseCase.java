@@ -76,13 +76,14 @@ public class TmdbSearchUseCase {
                         .queryParam("query", request.getQuery())
                         .queryParam("include_adult", request.getIncludeAdult())
                         .queryParam("language", request.getLanguage())
-                        .queryParam("primary_release", request.getPrimaryReleaseYear())
+                        .queryParam("primary_release_year", request.getPrimaryReleaseYear())
                         .queryParam("page", request.getPage())
                         .queryParam("region", request.getRegion())
                         .queryParam("year", request.getYear())
                         .build())
                 .retrieve()
                 .bodyToMono(TmdbFilmListResponse.class)
+                .log("tmdb-request")
                 .block();
         if (response != null && response.getResults() != null) {
             response.getResults().forEach(
