@@ -16,7 +16,7 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ListGenericResponse<T> {
 
-	private List<T> items;
+	private List<T> elements;
 	private int page;
 	private int size;
 	private long totalElements;

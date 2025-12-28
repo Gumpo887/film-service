@@ -36,7 +36,7 @@ public class GetEditionUseCase {
                     log.warn("Edition ID does not exist.");
                     return new IllegalArgumentException("Edition ID does not exist.");
                 });
-        List<GetPictureResponse> responseList = edition.pictures().stream()
+        List<GetPictureResponse> pictureList = edition.pictures().stream()
                 .map((picture) -> {
                             return new GetPictureResponse(
                                     picture.id().value(),
@@ -55,7 +55,7 @@ public class GetEditionUseCase {
                 edition.packagingType().name(),
                 true,
                 edition.notes().value(),
-                responseList
+                pictureList
         );
         Meta meta = new Meta();
         return new Envelope<>(data, meta);
