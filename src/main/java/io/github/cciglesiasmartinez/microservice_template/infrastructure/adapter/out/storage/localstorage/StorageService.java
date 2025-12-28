@@ -4,6 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageService {
 
-    String save(String editionId, MultipartFile file, String type);
+    void save(String fileName, MultipartFile file);
+    void delete(String fileName);
+    String getFileExtension(MultipartFile file);
 
 }

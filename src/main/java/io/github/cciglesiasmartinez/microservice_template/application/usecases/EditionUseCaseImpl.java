@@ -24,6 +24,7 @@ public class EditionUseCaseImpl implements EditionUseCase {
     private final DeleteEditionUseCase deleteEditionUseCase;
     private final ListEditionsUseCase listEditionsUseCase;
     private final AddPictureUseCase addPictureUseCase;
+    private final DeletePictureUseCase deletePictureUseCase;
 
     @Override
     public Envelope<CreateEditionResponse> createEdition(CreateEditionRequest request) {
@@ -31,8 +32,8 @@ public class EditionUseCaseImpl implements EditionUseCase {
     }
 
     @Override
-    public Envelope<CreatePictureResponse> addPicture(String editionId, MultipartFile file, String type) {
-        return addPictureUseCase.execute(editionId, file, type);
+    public Envelope<CreatePictureResponse> addPicture(String editionId, MultipartFile file) {
+        return addPictureUseCase.execute(editionId, file);
     }
 
     @Override
@@ -53,5 +54,10 @@ public class EditionUseCaseImpl implements EditionUseCase {
     @Override
     public Envelope<DeleteEditionResponse> deleteFilmById(String id) {
         return deleteEditionUseCase.execute(id);
+    }
+
+    @Override
+    public Envelope<DeletePictureResponse> deletePicture(String editionId, String pictureId) {
+        return deletePictureUseCase.execute(editionId, pictureId);
     }
 }

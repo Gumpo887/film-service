@@ -112,10 +112,11 @@ public class Edition {
 
     /**
      *
-     * @param url
+     * @param fileNameExtension
+     * @return
      */
-    public Picture addPicture(Url url) {
-        Picture picture = Picture.create(url, this,LocalDateTime.now());
+    public Picture addPicture(String fileNameExtension) {
+        Picture picture = Picture.create(fileNameExtension, this,LocalDateTime.now());
         pictures.add(picture);
         return picture;
     }

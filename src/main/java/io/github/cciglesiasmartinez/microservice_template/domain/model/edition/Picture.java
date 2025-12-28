@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 
 /**
  * Represents a Picture within the system.
+ *
+ * TODO: Add checksum hash value (MD5?)
  */
 public class Picture {
 
@@ -28,18 +30,21 @@ public class Picture {
     }
 
     /**
-     * Factory method intended to create a picture for the first time.
+     * Factory method used to create a {@link Picture} for the first time.
      *
-     * @param url
+     * @param fileExtension
+     * @param edition
      * @param uploadedAt
      * @return
      */
     public static Picture create(
-            Url url,
+            String fileExtension,
             Edition edition,
             LocalDateTime uploadedAt
     ) {
-        return new Picture(PictureId.generate(), url, edition, uploadedAt);
+        PictureId pictureId = PictureId.generate();
+        Url url = Url.of(pictureId.value() + "." + fileExtension);
+        return new Picture(pictureId, url, edition, uploadedAt);
     }
 
     /**

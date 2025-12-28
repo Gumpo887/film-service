@@ -14,16 +14,32 @@ public class StorageServiceImpl implements StorageService {
 
     private final Path root = Paths.get("static", "images");
 
+    // TODO: Add file hashing (MD5?) check. Might be needed to include in picture.
     @Override
-    public String save(String id, MultipartFile file, String type) {
-        System.out.println("Executing save in StorageService in dir: " + root);
+    public void save(String fileName, MultipartFile file) {
         try {
             String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-            Path target = root.resolve(id + "." + extension);
+            Path target = root.resolve(fileName + "." + extension);
             Files.copy(file.getInputStream(), target);
-            return "/images/" + target.getFileName();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void delete(String fileName) {
+        try {
+            Path target = root.resolve(fileName);
+            Files.delete(target);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String getFileExtension(MultipartFile file) {
+        return FilenameUtils.getExtension(file.getOriginalFilename());
+    }
+
+
 }

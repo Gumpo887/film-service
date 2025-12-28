@@ -6,43 +6,39 @@ import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.v
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.EditionRepository;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Meta;
-import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.CreatePictureResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.edition.responses.DeletePictureResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.storage.localstorage.StorageService;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Add picture use case.
- */
 @Service
 @Slf4j
 @AllArgsConstructor
 @Transactional
-public class AddPictureUseCase {
+public class DeletePictureUseCase {
 
     private EditionRepository editionRepository;
     private StorageService storageService;
 
-    /**
-     * Executes add picture use case.
-     *
-     * @param id
-     * @param file
-     * @return
-     */
-    public Envelope<CreatePictureResponse> execute(String id, MultipartFile file) {
-        EditionId editionId = EditionId.of(id);
-        Edition edition = editionRepository.findById(editionId)
-                .orElseThrow(() -> new RuntimeException("ID not found."));
-        String fileNameExtension = storageService.getFileExtension(file);
-        Picture picture = edition.addPicture(fileNameExtension);
+    public Envelope<DeletePictureResponse> execute(String editionId, String pictureId) {
+        EditionId id = EditionId.of(editionId);
+        Edition edition = editionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Picture ID not found"));
+        Picture pictureToDelete = null;
+        for (Picture p: edition.pictures()) {
+            if (p.id().value().equals(pictureId)) {
+                pictureToDelete = p;
+                edition.pictures().remove(p);
+                storageService.delete(pictureToDelete.url().value());
+                break;
+            }
+        }
+        if (pictureToDelete == null) { throw new IllegalArgumentException("Picture NOT found!"); }
         Edition updated = editionRepository.update(edition);
-        storageService.save(picture.id().value(), file);
-        CreatePictureResponse data = new CreatePictureResponse(picture.id().value(), true);
-        log.info("Picture added successfully.");
+        DeletePictureResponse data = new DeletePictureResponse(updated.editionId().value(), true);
+        log.info("Picture deleted successfully.");
         return new Envelope<>(data, new Meta());
     }
 

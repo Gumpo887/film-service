@@ -12,7 +12,7 @@ public interface EditionUseCase {
 
     // Create
     Envelope<CreateEditionResponse> createEdition(CreateEditionRequest request);
-    Envelope<CreatePictureResponse> addPicture(String editionId, MultipartFile file, String type);
+    Envelope<CreatePictureResponse> addPicture(String editionId, MultipartFile file);
 
     // Read
     Envelope<GetEditionResponse> getEdition(String id);
@@ -23,5 +23,6 @@ public interface EditionUseCase {
 
     // Delete
     Envelope<DeleteEditionResponse> deleteFilmById(String id);
+    Envelope<DeletePictureResponse> deletePicture(String editionId, String pictureId);
 
 }

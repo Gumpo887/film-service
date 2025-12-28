@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -79,21 +80,29 @@ public class EditionController {
 
     @Operation(summary = "Uploads a picture.", description = "Uploads a picture for a given edition id.")
     @ApiResponses(@ApiResponse(responseCode = "201", description = "Picture correctly uploaded."))
-    @PostMapping("/{id}/pictures")
+    @PostMapping("/{editionId}/pictures")
     public ResponseEntity<Envelope<CreatePictureResponse>> uploadPicture(
-            @PathVariable String id,
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("type") String type
+            @PathVariable String editionId,
+            @RequestParam("file") MultipartFile file
     ) {
-        Envelope<CreatePictureResponse> response = editionUseCase.addPicture(id, file, type);
+        Envelope<CreatePictureResponse> response = editionUseCase.addPicture(editionId, file);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @Operation(summary = "Deletes a picture.", description = "Deletes a given picture by id.")
     @ApiResponses(@ApiResponse(responseCode = "200", description = "Picture deleted."))
-    @DeleteMapping("/pictures/{id}")
-    public ResponseEntity<Envelope<DeletePictureResponse>> deletePicture(@PathVariable String id) {
-        return null;
+    @DeleteMapping("{editionId}/pictures/{pictureId}")
+    public ResponseEntity<Envelope<DeletePictureResponse>> deletePicture(
+            @PathVariable String editionId,
+            @PathVariable String pictureId) {
+        Envelope<DeletePictureResponse> response = editionUseCase.deletePicture(editionId, pictureId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/admin")
+    public String admin() {
+        return "ok";
     }
 
 }
