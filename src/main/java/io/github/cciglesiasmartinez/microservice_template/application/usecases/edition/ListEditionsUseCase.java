@@ -45,7 +45,7 @@ public class ListEditionsUseCase {
                             edition.packagingType().name(),
                             true,
                             edition.notes().value(),
-                            edition.pictures().getFirst().url().value()
+                            !edition.pictures().isEmpty() ? edition.pictures().getFirst().url().value() : null
                     );
                 })
                 .toList();
