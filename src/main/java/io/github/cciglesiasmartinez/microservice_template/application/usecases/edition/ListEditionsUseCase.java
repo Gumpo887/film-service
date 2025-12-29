@@ -44,7 +44,8 @@ public class ListEditionsUseCase {
                             edition.releaseYear(),
                             edition.packagingType().name(),
                             true,
-                            edition.notes().value()
+                            edition.notes().value(),
+                            edition.pictures().getFirst().url().value()
                     );
                 })
                 .toList();

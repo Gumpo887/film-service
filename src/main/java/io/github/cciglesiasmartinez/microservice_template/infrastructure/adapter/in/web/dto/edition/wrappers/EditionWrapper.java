@@ -18,7 +18,6 @@ public class EditionWrapper {
 
     private String id;
     private String filmId;
-
     private String barcode;
     private String country;
     private String format;
@@ -26,5 +25,6 @@ public class EditionWrapper {
     private String packagingType;
     private boolean verified;
     private String notes;
+    private String pictureUrl;
 
 }
