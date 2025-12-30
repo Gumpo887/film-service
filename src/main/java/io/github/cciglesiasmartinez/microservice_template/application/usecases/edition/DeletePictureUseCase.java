@@ -22,10 +22,7 @@ public class DeletePictureUseCase {
     private EditionRepository editionRepository;
     private StorageService storageService;
 
-    public Envelope<DeletePictureResponse> execute(String editionId, String pictureId) {
-        EditionId id = EditionId.of(editionId);
-        Edition edition = editionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Picture ID not found"));
+    private void removePicture(String pictureId, Edition edition) {
         Picture pictureToDelete = null;
         for (Picture p: edition.pictures()) {
             if (p.id().value().equals(pictureId)) {
@@ -36,6 +33,13 @@ public class DeletePictureUseCase {
             }
         }
         if (pictureToDelete == null) { throw new IllegalArgumentException("Picture NOT found!"); }
+    }
+
+    public Envelope<DeletePictureResponse> execute(String editionId, String pictureId) {
+        EditionId id = EditionId.of(editionId);
+        Edition edition = editionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Picture ID not found"));
+        removePicture(pictureId, edition);
         Edition updated = editionRepository.update(edition);
         DeletePictureResponse data = new DeletePictureResponse(updated.editionId().value(), true);
         log.info("Picture deleted successfully.");

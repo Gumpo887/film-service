@@ -24,50 +24,23 @@ public class ListEditionsUseCase {
 
     private final EditionRepository editionRepository;
 
-    private String link(int page, int size) {
+    private String buildLink(int page, int size) {
         String cleanBase = (basePath != null && basePath.endsWith("/"))
                 ? basePath.substring(0, basePath.length() - 1)
                 : basePath;
         return String.format("%s?page=%d&size=%d", cleanBase, page, size);
     }
 
+    private List<EditionWrapper> getEditionListFrom(PageResult<Edition> pageResult) {
+        return pageResult.content().stream()
+                .map(EditionWrapper::from)
+                .toList();
+    }
+
     public Envelope<ListGenericResponse<EditionWrapper>> execute(int page, int size) {
         PageResult<Edition> pageResult = editionRepository.findPage(page, size);
-        List<EditionWrapper> editions = pageResult.content().stream()
-                .map(edition -> {
-                    return new EditionWrapper(
-                            edition.editionId().value(),
-                            edition.film().itemId().value(),
-                            edition.barCode().value(),
-                            edition.country().value(),
-                            edition.format().name(),
-                            edition.releaseYear(),
-                            edition.packagingType().name(),
-                            true,
-                            edition.notes().value(),
-                            !edition.pictures().isEmpty() ? edition.pictures().getFirst().url().value() : null
-                    );
-                })
-                .toList();
-        Integer nextPage = pageResult.hasNext() ? pageResult.page() + 1 : null;
-        Integer prevPage = pageResult.hasPrevious() ? pageResult.page() - 1 : null;
-        String currentLink = link(pageResult.page(), pageResult.size());
-        String nextLink = pageResult.hasNext() ? link(pageResult.page() + 1, pageResult.size()) : null;
-        String previousLink = pageResult.hasPrevious() ? link(pageResult.page() - 1, pageResult.size()) : null;
-        ListGenericResponse<EditionWrapper> data = new ListGenericResponse<>(
-                editions,
-                pageResult.page(),
-                pageResult.size(),
-                pageResult.totalElements(),
-                pageResult.totalPages(),
-                pageResult.hasNext(),
-                pageResult.hasPrevious(),
-                nextPage,
-                prevPage,
-                currentLink,
-                nextLink,
-                previousLink
-        );
+        List<EditionWrapper> editions = getEditionListFrom(pageResult);
+        ListGenericResponse<EditionWrapper> data = ListGenericResponse.from(editions, pageResult, this::buildLink);
         log.info("Editions page {} retrieved (size {}).", pageResult.page(), pageResult.size());
         return new Envelope<>(data, new Meta());
     }

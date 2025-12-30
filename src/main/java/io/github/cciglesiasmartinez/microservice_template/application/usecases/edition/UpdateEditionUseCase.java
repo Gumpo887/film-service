@@ -14,12 +14,41 @@ import org.springframework.stereotype.Service;
 
 import java.time.Year;
 
+/**
+ * Update edition use case.
+ * TODO: Consider updating the full aggregate instead of having separate use cases for pictures.
+ */
 @Service
 @AllArgsConstructor
 @Slf4j
 public class UpdateEditionUseCase {
 
     private EditionRepository editionRepository;
+
+    private Notes updateNotesIfPresent(UpdateEditionRequest request, Edition existing) {
+        return request.getNotes() != null ?  Notes.of(request.getNotes()) : existing.notes();
+    }
+
+    private PackagingType updatePackagingIfPresent(UpdateEditionRequest request, Edition existing) {
+        return request.getPackagingType() != null
+                ? PackagingType.valueOf(request.getPackagingType()) : existing.packagingType();
+    }
+
+    private Year updateYearIfPresent(UpdateEditionRequest request, Edition existing) {
+        return request.getReleaseYear() != null ? request.getReleaseYear() : existing.releaseYear();
+    }
+
+    private Format updateFormatIfPresent(UpdateEditionRequest request, Edition existing) {
+        return request.getFormat() != null ? Format.valueOf(request.getFormat()) : existing.format();
+    }
+
+    private Country updateCountryIfPresent(UpdateEditionRequest request, Edition existing) {
+        return request.getCountry() != null ? Country.of(request.getCountry()) : existing.country();
+    }
+
+    private BarCode updateBarCodeIfPresent(UpdateEditionRequest request, Edition existing) {
+        return  request.getBarCode() != null ? BarCode.of(request.getBarCode()) : existing.barCode();
+    }
 
     /**
      * Execute update edition use case.
@@ -30,22 +59,15 @@ public class UpdateEditionUseCase {
     public Envelope<UpdateEditionResponse> execute(UpdateEditionRequest request) {
         Edition existing = editionRepository.findById(EditionId.of(request.getId()))
                 .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
-        BarCode barCode = request.getBarCode() != null ? BarCode.of(request.getBarCode()) : existing.barCode();
-        Country country = request.getCountry() != null ? Country.of(request.getCountry()) : existing.country();
-        Format format = request.getFormat() != null ? Format.valueOf(request.getFormat()) : existing.format();
-        Year releaseYear = request.getReleaseYear() != null ? request.getReleaseYear() : existing.releaseYear();
-        PackagingType packagingType = request.getPackagingType() != null
-                ? PackagingType.valueOf(request.getPackagingType()) : existing.packagingType();
-        Notes notes = request.getNotes() != null ?  Notes.of(request.getNotes()) : existing.notes();
         Edition updated = Edition.of(
                 existing.editionId(),
                 existing.film(),
-                barCode,
-                country,
-                format,
-                releaseYear,
-                packagingType,
-                notes,
+                updateBarCodeIfPresent(request, existing),
+                updateCountryIfPresent(request, existing),
+                updateFormatIfPresent(request, existing),
+                updateYearIfPresent(request, existing),
+                updatePackagingIfPresent(request, existing),
+                updateNotesIfPresent(request, existing),
                 existing.pictures());
         updated = editionRepository.update(updated); // TODO: Review this, consider a void method instead.
         UpdateEditionResponse data = new UpdateEditionResponse(updated.editionId().value(), true);

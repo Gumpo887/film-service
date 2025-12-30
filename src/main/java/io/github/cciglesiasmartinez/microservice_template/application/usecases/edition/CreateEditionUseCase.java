@@ -23,7 +23,6 @@ import java.util.List;
 
 /**
  * Create edition use case.
- *
  * TODO: We need a strong strategy against dupes. Probably we'll want a draft strategy.
  */
 @Service
@@ -55,9 +54,8 @@ public class CreateEditionUseCase {
         Edition edition = Edition.create(film, barCode, country, format, releaseYear, packagingType, notes, pictures);
         edition = editionRepository.save(edition); // TODO: Careful with this.
         CreateEditionResponse data = new CreateEditionResponse(edition.editionId().value(), true);
-        Meta meta = new Meta();
         log.info("Edition {} successfully created.", edition.editionId().value());
-        return new Envelope<>(data, meta);
+        return new Envelope<>(data, new Meta());
     }
 
 }

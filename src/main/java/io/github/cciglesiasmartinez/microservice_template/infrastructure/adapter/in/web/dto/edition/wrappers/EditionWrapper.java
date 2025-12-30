@@ -2,6 +2,7 @@ package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapte
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.Edition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,5 +27,25 @@ public class EditionWrapper {
     private boolean verified;
     private String notes;
     private String pictureUrl;
+
+    private static String extractPictureFrom(Edition edition) {
+        return !edition.pictures().isEmpty()
+                ? edition.pictures().getFirst().url().value()
+                : null;
+    }
+
+    public static EditionWrapper from(Edition edition) {
+        return new EditionWrapper(
+                edition.editionId().value(),
+                edition.film().itemId().value(),
+                edition.barCode().value(),
+                edition.country().value(),
+                edition.format().name(),
+                edition.releaseYear(),
+                edition.packagingType().name(),
+                true,
+                edition.notes().value(),
+                extractPictureFrom(edition));
+    }
 
 }
