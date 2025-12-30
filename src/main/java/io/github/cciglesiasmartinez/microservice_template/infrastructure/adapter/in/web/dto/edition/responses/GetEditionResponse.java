@@ -2,6 +2,8 @@ package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapte
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.Edition;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.Picture;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +32,31 @@ public class GetEditionResponse {
     private boolean verified;
     private String notes;
 
-    private List<?> pictures;
+    private List<GetPictureResponse> pictures;
+
+    private static List<GetPictureResponse> createPictureListFrom(List<Picture> pictureList) {
+        return pictureList.stream()
+                .map((picture) -> new GetPictureResponse(
+                        picture.id().value(),
+                        picture.url().value(),
+                        picture.uploadedAt()
+                ))
+                .toList();
+    }
+
+    public static GetEditionResponse from(Edition edition) {
+        return new GetEditionResponse(
+                edition.editionId().value(),
+                edition.film().itemId().value(),
+                edition.barCode().value(),
+                edition.country().value(),
+                edition.format().name(),
+                edition.releaseYear(),
+                edition.packagingType().name(),
+                true,
+                edition.notes().value(),
+                createPictureListFrom(edition.pictures())
+        );
+    }
 
 }
