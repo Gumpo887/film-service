@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 /**
  * Represents a Picture within the system.
- *
  * TODO: Add checksum hash value (MD5?)
  */
 public class Picture {
