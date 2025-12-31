@@ -55,8 +55,7 @@ public class GetEditionResponse {
                 edition.packagingType().name(),
                 true,
                 edition.notes().value(),
-                createPictureListFrom(edition.pictures())
-        );
+                createPictureListFrom(edition.pictures()));
     }
 
 }
