@@ -22,7 +22,6 @@ public class SecurityConfig {
 
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter() {
-        System.out.println("Callin jwt converter");
         JwtGrantedAuthoritiesConverter authoritiesConverter =
                 new JwtGrantedAuthoritiesConverter();
 
@@ -37,14 +36,11 @@ public class SecurityConfig {
 
     // TODO: Very weak approach. Consider a better strategy later (RSA).
     @Bean
-    JwtDecoder jwtDecoder(
-            @Value("${jwt.secret}") String secret
-    ) {
+    JwtDecoder jwtDecoder(@Value("${jwt.secret}") String secret) {
         SecretKey key = new SecretKeySpec(
                 secret.getBytes(StandardCharsets.UTF_8),
                 "HmacSHA256"
         );
-        System.out.println("CAllin decoder");
         return NimbusJwtDecoder.withSecretKey(key).build();
     }
 
