@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @EnableMethodSecurity
 @Configuration
@@ -37,8 +37,9 @@ public class SecurityConfig {
     // TODO: Very weak approach. Consider a better strategy later (RSA).
     @Bean
     JwtDecoder jwtDecoder(@Value("${jwt.secret}") String secret) {
+        byte[] decodedKey = Base64.getDecoder().decode(secret);
         SecretKey key = new SecretKeySpec(
-                secret.getBytes(StandardCharsets.UTF_8),
+                decodedKey,
                 "HmacSHA256"
         );
         return NimbusJwtDecoder.withSecretKey(key).build();
