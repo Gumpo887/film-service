@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -101,7 +102,10 @@ public class EditionController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
-    public String admin() {
+    public String admin(Authentication authentication) {
+        System.out.println(authentication.isAuthenticated());
+        System.out.println(authentication.getDetails().toString());
+        System.out.println(authentication.getName());
         return "ok";
     }
 

@@ -12,7 +12,8 @@ public class Item {
     private ItemId id;
     private Edition edition;
     private String userId;
-    private LocalDate purchaseData;
+    private String purchasePlace;
+    private LocalDate purchaseDate;
     private Double purchasePrice;
     private Condition mediaCondition;
     private Condition caseCondition;
@@ -24,7 +25,8 @@ public class Item {
             ItemId id,
             Edition edition,
             String userId,
-            LocalDate purchaseData,
+            String purchasePlace,
+            LocalDate purchaseDate,
             Double purchasePrice,
             Condition mediaCondition,
             Condition caseCondition,
@@ -34,7 +36,8 @@ public class Item {
         this.id = id;
         this.edition = edition;
         this.userId = userId;
-        this.purchaseData = purchaseData;
+        this.purchasePlace = purchasePlace;
+        this.purchaseDate = purchaseDate;
         this.purchasePrice = purchasePrice;
         this.mediaCondition = mediaCondition;
         this.caseCondition = caseCondition;
@@ -46,7 +49,8 @@ public class Item {
     public static Item create(
             Edition edition,
             String userId,
-            LocalDate purchaseData,
+            String purchasePlace,
+            LocalDate purchaseDate,
             Double purchasePrice,
             Condition mediaCondition,
             Condition caseCondition,
@@ -56,7 +60,8 @@ public class Item {
                 ItemId.generate(),
                 edition,
                 userId,
-                purchaseData,
+                purchasePlace,
+                purchaseDate,
                 purchasePrice,
                 mediaCondition,
                 caseCondition,
@@ -70,7 +75,8 @@ public class Item {
             ItemId id,
             Edition edition,
             String userId,
-            LocalDate purchaseData,
+            String purchasePlace,
+            LocalDate purchaseDate,
             Double purchasePrice,
             Condition mediaCondition,
             Condition caseCondition,
@@ -81,7 +87,8 @@ public class Item {
                 id,
                 edition,
                 userId,
-                purchaseData,
+                purchasePlace,
+                purchaseDate,
                 purchasePrice,
                 mediaCondition,
                 caseCondition,
@@ -90,4 +97,39 @@ public class Item {
                 lastModified
         );
     }
+
+    public ItemId id() {
+        return this.id;
+    }
+    public Edition edition() {
+        return this.edition;
+    }
+    public String userId() {
+        return this.userId;
+    }
+    public String purchasePlace() {
+        return this.purchasePlace;
+    }
+    public LocalDate purchaseDate() {
+        return this.purchaseDate;
+    }
+    public Double purchasePrice() {
+        return this.purchasePrice;
+    }
+    public Condition mediaCondition() {
+        return this.mediaCondition;
+    }
+    public Condition caseCondition() {
+        return this.caseCondition;
+    }
+    public String comments() {
+        return this.comments;
+    }
+    public LocalDateTime addedDate() {
+        return this.addedDate;
+    }
+    public LocalDateTime lastModified() {
+        return this.lastModified;
+    }
+
 }
