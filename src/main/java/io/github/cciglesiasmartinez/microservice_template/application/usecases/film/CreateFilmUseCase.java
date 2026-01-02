@@ -24,13 +24,13 @@ public class CreateFilmUseCase {
     private final FilmRepository filmRepository;
 
     /**
-     * Executes create film use case.
+     * Helper that creates a {@link Film} from a {@link CreateFilmRequest}.
      *
-     * @param request {@link CreateFilmRequest} DTO containing film information.
-     * @return {@link CreateFilmResponse} DTO containing film information.
+     * @param request the {@link CreateFilmRequest} we are going to use.
+     * @return a {@link Film} instance
      */
-    public Envelope<CreateFilmResponse> execute(CreateFilmRequest request) {
-        Film film = Film.create(
+    private Film getFilmFrom(CreateFilmRequest request) {
+        return Film.create(
                 Title.of(request.getTitle()),
                 Description.of(request.getDescription()),
                 ReleaseYear.of(request.getReleaseYear()),
@@ -38,10 +38,16 @@ public class CreateFilmUseCase {
                 Rating.of(request.getRating()),
                 Poster.of(request.getPoster())
         );
+    }
 
-        Film saved = filmRepository.save(film);
-
-        CreateFilmResponse data = new CreateFilmResponse(
+    /**
+     * Helper method that creates a {@link CreateFilmResponse} from a {@link Film} instance.
+     *
+     * @param saved a {@link Film} instance.
+     * @return {@link CreateFilmResponse} DTO containing the film information.
+     */
+    private CreateFilmResponse getCreateFilmResponseFrom(Film saved) {
+        return new CreateFilmResponse(
                 saved.itemId().value(),
                 saved.title().value(),
                 saved.description().value(),
@@ -50,7 +56,19 @@ public class CreateFilmUseCase {
                 saved.rating().value(),
                 saved.poster().value()
         );
+    }
 
+    /**
+     * Executes create film use case.
+     *
+     * @param request {@link CreateFilmRequest} DTO containing film information.
+     * @return {@link CreateFilmResponse} DTO containing film information.
+     */
+    public Envelope<CreateFilmResponse> execute(CreateFilmRequest request) {
+        Film film = getFilmFrom(request);
+        Film saved = filmRepository.save(film);
+        CreateFilmResponse data = getCreateFilmResponseFrom(saved);
+        log.info("Film {} has been successfully added by user {}", saved.itemId().value(), null);
         return new Envelope<>(data, new Meta());
     }
 
