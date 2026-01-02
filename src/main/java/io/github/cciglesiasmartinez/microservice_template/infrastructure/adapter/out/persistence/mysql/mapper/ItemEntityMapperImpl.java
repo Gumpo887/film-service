@@ -33,17 +33,6 @@ public class ItemEntityMapperImpl implements ItemEntityMapper{
 
     @Override
     public ItemEntity toEntity(Item item) {
-
-        Object caseCondition = item.caseCondition();
-        Object mediaCondition = item.mediaCondition();
-
-        log.info("CaseCondition - Type: {}, Value: '{}'",
-                caseCondition != null ? caseCondition.getClass() : "null",
-                caseCondition);
-        log.info("MediaCondition - Type: {}, Value: '{}'",
-                mediaCondition != null ? mediaCondition.getClass() : "null",
-                mediaCondition);
-
         ItemEntity entity = new ItemEntity();
         entity.setId(item.id().value());
         entity.setEdition(editionEntityMapper.toEntity(item.edition()));
