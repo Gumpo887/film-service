@@ -78,10 +78,12 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public void update(ItemId itemId) {
+    @Transactional
+    public void update(Item item) {
         ItemEntity entity = springDataItemRepository
-                .findById(itemId.value())
-                .orElseThrow(() -> { throw new IllegalArgumentException(""); });
+                .findById(item.id().value())
+                .orElseThrow(() -> new IllegalArgumentException("Item ID not found."));
+        itemEntityMapper.updateEntity(entity, item);
     }
 
     @Override

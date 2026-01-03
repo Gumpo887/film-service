@@ -7,6 +7,6 @@ public interface ItemEntityMapper {
 
     Item toDomain(ItemEntity entity);
     ItemEntity toEntity(Item item);
-    Item updateEntity(ItemEntity entity, Item item);
+    void updateEntity(ItemEntity entity, Item item);
 
 }

@@ -3,7 +3,9 @@ package io.github.cciglesiasmartinez.microservice_template.infrastructure.adapte
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.ItemUseCase;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.requests.CreateItemRequest;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.requests.UpdateItemRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.responses.CreateItemResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.responses.UpdateItemResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -30,7 +32,17 @@ public class ItemController {
             @Valid @RequestBody CreateItemRequest request,
             Authentication authentication) {
         Envelope<CreateItemResponse> response = itemUseCase.createItem(request, authentication.getName());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @Operation(summary = "Updates an item.", description = "Updates a new item with provided data.")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "Item updated successfully."))
+    @PutMapping("")
+    public ResponseEntity<Envelope<UpdateItemResponse>> updateItem(
+            @Valid @RequestBody UpdateItemRequest request,
+            Authentication authentication) {
+        Envelope<UpdateItemResponse> response = itemUseCase.updateItem(request, authentication.getName());
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
 }

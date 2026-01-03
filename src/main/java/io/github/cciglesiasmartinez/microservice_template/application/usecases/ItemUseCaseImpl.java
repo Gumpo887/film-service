@@ -2,6 +2,7 @@ package io.github.cciglesiasmartinez.microservice_template.application.usecases;
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.ItemUseCase;
 import io.github.cciglesiasmartinez.microservice_template.application.usecases.item.CreateItemUseCase;
+import io.github.cciglesiasmartinez.microservice_template.application.usecases.item.UpdateItemUseCase;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.requests.CreateItemRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.requests.UpdateItemRequest;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class ItemUseCaseImpl implements ItemUseCase {
 
     private CreateItemUseCase createItemUseCase;
+    private UpdateItemUseCase updateItemUseCase;
 
     @Override
     public Envelope<CreateItemResponse> createItem(CreateItemRequest request, String userId) {
@@ -30,7 +32,7 @@ public class ItemUseCaseImpl implements ItemUseCase {
 
     @Override
     public Envelope<UpdateItemResponse> updateItem(UpdateItemRequest request, String userId) {
-        return null;
+        return updateItemUseCase.execute(request, userId);
     }
 
     @Override

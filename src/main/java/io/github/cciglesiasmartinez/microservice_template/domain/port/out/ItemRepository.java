@@ -20,7 +20,7 @@ public interface ItemRepository {
     PageResult<Item> findPage(int page, int size);
 
     // Update
-    void update(ItemId itemId);
+    void update(Item item);
 
     // Delete
     void deleteById(ItemId id);

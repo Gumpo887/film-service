@@ -49,8 +49,15 @@ public class ItemEntityMapperImpl implements ItemEntityMapper{
     }
 
     @Override
-    public Item updateEntity(ItemEntity entity, Item item) {
-        return null;
+    public void updateEntity(ItemEntity entity, Item item) {
+        ItemEntity updated = toEntity(item);
+        entity.setPurchaseDate(updated.getPurchaseDate());
+        entity.setPurchasePlace(updated.getPurchasePlace());
+        entity.setPurchasePrice(updated.getPurchasePrice());
+        entity.setMediaCondition(updated.getMediaCondition());
+        entity.setCaseCondition(updated.getCaseCondition());
+        entity.setComments(updated.getComments());
+        entity.setLastModified(updated.getLastModified());
     }
 
 }
