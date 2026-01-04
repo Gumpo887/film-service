@@ -47,7 +47,6 @@ public class UpdateItemUseCase {
     }
 
     private void checkIfUserIdIsValid(String userId, String itemUserId) {
-        System.out.println(userId + " " + itemUserId);
         if (!userId.equals(itemUserId)) {
             throw new RuntimeException("User does not match");
         }
