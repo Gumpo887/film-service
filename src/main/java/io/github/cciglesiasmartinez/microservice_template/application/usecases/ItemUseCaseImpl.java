@@ -2,6 +2,7 @@ package io.github.cciglesiasmartinez.microservice_template.application.usecases;
 
 import io.github.cciglesiasmartinez.microservice_template.application.port.in.ItemUseCase;
 import io.github.cciglesiasmartinez.microservice_template.application.usecases.item.CreateItemUseCase;
+import io.github.cciglesiasmartinez.microservice_template.application.usecases.item.DeleteItemUseCase;
 import io.github.cciglesiasmartinez.microservice_template.application.usecases.item.UpdateItemUseCase;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.requests.CreateItemRequest;
@@ -19,6 +20,7 @@ public class ItemUseCaseImpl implements ItemUseCase {
 
     private CreateItemUseCase createItemUseCase;
     private UpdateItemUseCase updateItemUseCase;
+    private DeleteItemUseCase deleteItemUseCase;
 
     @Override
     public Envelope<CreateItemResponse> createItem(CreateItemRequest request, String userId) {
@@ -36,7 +38,8 @@ public class ItemUseCaseImpl implements ItemUseCase {
     }
 
     @Override
-    public Envelope<DeleteItemResponse> deleteItem(String itemId) {
-        return null;
+    public Envelope<DeleteItemResponse> deleteItem(String itemId, String userId) {
+        return deleteItemUseCase.execute(itemId, userId);
     }
+
 }

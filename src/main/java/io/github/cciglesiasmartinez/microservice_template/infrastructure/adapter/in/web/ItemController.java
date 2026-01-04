@@ -5,6 +5,7 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.requests.CreateItemRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.requests.UpdateItemRequest;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.responses.CreateItemResponse;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.responses.DeleteItemResponse;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.responses.UpdateItemResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -43,6 +44,16 @@ public class ItemController {
             Authentication authentication) {
         Envelope<UpdateItemResponse> response = itemUseCase.updateItem(request, authentication.getName());
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    @Operation(summary = "Deletes an item.", description = "Deletes the item by its id.")
+    @ApiResponses(@ApiResponse(responseCode = "201", description = "Item deleted successfully."))
+    @DeleteMapping("{id}")
+    public ResponseEntity<Envelope<DeleteItemResponse>> deleteItem(
+            String id,
+            Authentication authentication) {
+        Envelope<DeleteItemResponse> response = itemUseCase.deleteItem(id, authentication.getName());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

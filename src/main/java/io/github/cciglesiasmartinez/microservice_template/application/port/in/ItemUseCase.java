@@ -20,6 +20,6 @@ public interface ItemUseCase {
     Envelope<UpdateItemResponse> updateItem(UpdateItemRequest request, String userId);
 
     // Delete
-    Envelope<DeleteItemResponse> deleteItem(String itemId);
+    Envelope<DeleteItemResponse> deleteItem(String itemId, String userId);
 
 }
