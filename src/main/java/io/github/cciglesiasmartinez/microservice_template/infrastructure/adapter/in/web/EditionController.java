@@ -100,6 +100,17 @@ public class EditionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @Operation(summary = "Sets the edition cover picture.", description = "Sets the edition cover picture.")
+    @ApiResponses(@ApiResponse(responseCode = "200", description = "Cover picture set."))
+    @PutMapping("{editionId}/cover/{pictureId}")
+    public ResponseEntity<Envelope<SetEditionCoverResponse>> setEditionCover(
+            @PathVariable String editionId,
+            @PathVariable String pictureId
+    ) {
+        Envelope<SetEditionCoverResponse> response = editionUseCase.setEditionCover(editionId, pictureId);
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin")
     public String admin(Authentication authentication) {

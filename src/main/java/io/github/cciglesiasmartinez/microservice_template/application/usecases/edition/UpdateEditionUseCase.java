@@ -25,6 +25,10 @@ public class UpdateEditionUseCase {
 
     private EditionRepository editionRepository;
 
+    private String updateCoverPictureIfPresent(UpdateEditionRequest request, Edition existing) {
+        return request.getCoverPicture() != null ? request.getCoverPicture() : existing.coverPicture();
+    }
+
     private Notes updateNotesIfPresent(UpdateEditionRequest request, Edition existing) {
         return request.getNotes() != null ?  Notes.of(request.getNotes()) : existing.notes();
     }
@@ -62,6 +66,7 @@ public class UpdateEditionUseCase {
         Edition updated = Edition.of(
                 existing.editionId(),
                 existing.film(),
+                updateCoverPictureIfPresent(request, existing),
                 updateBarCodeIfPresent(request, existing),
                 updateCountryIfPresent(request, existing),
                 updateFormatIfPresent(request, existing),

@@ -25,6 +25,7 @@ public class EditionUseCaseImpl implements EditionUseCase {
     private final ListEditionsUseCase listEditionsUseCase;
     private final AddPictureUseCase addPictureUseCase;
     private final DeletePictureUseCase deletePictureUseCase;
+    private final SetEditionCoverUseCase setEditionCoverUseCase;
 
     @Override
     public Envelope<CreateEditionResponse> createEdition(CreateEditionRequest request) {
@@ -49,6 +50,11 @@ public class EditionUseCaseImpl implements EditionUseCase {
     @Override
     public Envelope<UpdateEditionResponse> updateEdition(UpdateEditionRequest request) {
         return updateEditionUseCase.execute(request);
+    }
+
+    @Override
+    public Envelope<SetEditionCoverResponse> setEditionCover(String editionId, String pictureId) {
+        return setEditionCoverUseCase.execute(editionId, pictureId);
     }
 
     @Override

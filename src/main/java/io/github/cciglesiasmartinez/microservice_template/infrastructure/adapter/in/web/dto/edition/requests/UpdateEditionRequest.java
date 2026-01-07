@@ -14,6 +14,7 @@ import java.time.Year;
 public class UpdateEditionRequest {
 
     private String id;
+    private String coverPicture;
     private String barCode;
     private String country;
     private String format;

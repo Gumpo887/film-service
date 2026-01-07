@@ -16,6 +16,7 @@ public class Edition {
 
     private EditionId id;
     private Film film;
+    private String coverPicture;
     private BarCode barCode;
     private Country country;
     private Format format;
@@ -27,6 +28,7 @@ public class Edition {
     private Edition(
             EditionId id,
             Film film,
+            String coverPicture,
             BarCode barCode,
             Country country,
             Format format,
@@ -37,6 +39,7 @@ public class Edition {
     ) {
         this.id = id;
         this.film = film;
+        this.coverPicture = this.coverPicture;
         this.barCode = barCode;
         this.country = country;
         this.format = format;
@@ -72,6 +75,7 @@ public class Edition {
         return new Edition(
                 EditionId.generate(),
                 film,
+                null,
                 barCode,
                 country,
                 format,
@@ -99,6 +103,7 @@ public class Edition {
     public static Edition of(
             EditionId id,
             Film film,
+            String coverPicture,
             BarCode barCode,
             Country country,
             Format format,
@@ -107,7 +112,7 @@ public class Edition {
             Notes notes,
             List<Picture> pictures
     ) {
-        return new Edition(id, film, barCode, country, format, releaseYear, packagingType, notes, pictures);
+        return new Edition(id, film, coverPicture, barCode, country, format, releaseYear, packagingType, notes, pictures);
     }
 
     /**
@@ -129,8 +134,13 @@ public class Edition {
         pictures.removeIf(p -> p.id().equals(pictureId));
     }
 
+    public void setCoverPicture(PictureId pictureId) {
+        this.coverPicture = pictureId.value();
+    }
+
     public EditionId editionId() { return this.id; }
     public Film film() { return this.film; }
+    public String coverPicture() { return this.coverPicture; }
     public BarCode barCode() { return this.barCode; }
     public Country country() { return this.country; }
     public Format format() { return this.format; }

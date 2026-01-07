@@ -10,6 +10,7 @@ import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -59,6 +60,7 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
         return Edition.of(
                 EditionId.of(entity.getId()),
                 film,
+                entity.getCoverPicture(),
                 BarCode.of(entity.getBarCode()),
                 Country.of(entity.getCountry()),
                 entity.getFormat(), // 1:1 mapping from enum in VO and persistence
@@ -76,6 +78,7 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
         EditionEntity entity = new EditionEntity();
         entity.setId(edition.editionId().value());
         entity.setFilm(filmEntity);
+        entity.setCoverPicture(edition.coverPicture());
         entity.setBarCode(edition.barCode().value());
         entity.setCountry(edition.country().value());
         entity.setFormat(edition.format());
@@ -89,6 +92,16 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
 
     @Override
     public Edition updateEntity(EditionEntity entity, Edition edition) {
+
+        entity.setBarCode(edition.barCode().value());
+        entity.setCountry(edition.country().value());
+        entity.setFormat(edition.format());
+        entity.setReleaseYear(edition.releaseYear());
+        entity.setPackagingType(edition.packagingType());
+        entity.setCoverPicture(edition.coverPicture());
+        entity.setNotes(edition.notes().value());
+        entity.setUpdatedAt(LocalDateTime.now());
+
         // Index for existing pics
         Map<String, PictureEntity> managedPictures = entity.getPictures().stream()
                         .collect(Collectors.toMap(PictureEntity::getId, Function.identity()));

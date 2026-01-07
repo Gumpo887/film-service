@@ -32,6 +32,12 @@ public class EditionEntity implements Serializable {
     private FilmEntity film;
 
     /*
+    Cover picture
+ */
+    @Column(name = "cover_picture")
+    private String coverPicture;
+
+    /*
         Information codes
      */
     @Column(name = "barcode")
@@ -142,7 +148,6 @@ public class EditionEntity implements Serializable {
 //            orphanRemoval = true
 //    )
 //    private List<MediaEntity> medias = new ArrayList<>();
-
 
     // TODO: Review a refine all these fields.
 

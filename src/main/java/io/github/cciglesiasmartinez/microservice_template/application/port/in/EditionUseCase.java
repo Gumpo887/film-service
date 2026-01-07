@@ -20,6 +20,7 @@ public interface EditionUseCase {
 
     // Update
     Envelope<UpdateEditionResponse> updateEdition(UpdateEditionRequest request);
+    Envelope<SetEditionCoverResponse> setEditionCover(String editionId, String pictureId);
 
     // Delete
     Envelope<DeleteEditionResponse> deleteFilmById(String id);
