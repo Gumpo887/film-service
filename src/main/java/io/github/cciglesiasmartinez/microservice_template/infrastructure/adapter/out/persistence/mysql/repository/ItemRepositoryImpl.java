@@ -4,6 +4,7 @@ import io.github.cciglesiasmartinez.microservice_template.domain.model.item.Item
 import io.github.cciglesiasmartinez.microservice_template.domain.model.item.valueobjects.ItemId;
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.ItemRepository;
 import io.github.cciglesiasmartinez.microservice_template.domain.shared.PageResult;
+import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.item.wrappers.CollectionItemWrapper;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.persistence.mysql.entity.ItemEntity;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.persistence.mysql.mapper.ItemEntityMapper;
 import lombok.AllArgsConstructor;
@@ -46,12 +47,12 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public PageResult<Item> findPageByUserId(int page, int size, String userId) {
+    public PageResult<CollectionItemWrapper> findPageByUserId(int page, int size, String userId) {
         Pageable pageable = PageRequest.of(page,size);
-        Page<ItemEntity> p = springDataItemRepository.findAllByUserId(userId, pageable);
-        List<Item> elements = p.getContent().stream().map(itemEntityMapper::toDomain).toList();
+        Page<CollectionItemWrapper> p = springDataItemRepository.findAllByUserId(userId, pageable);
+//        List<Item> elements = p.getContent().stream().map(itemEntityMapper::toDomain).toList();
         return new PageResult<>(
-                elements,
+                p.getContent(),
                 p.getNumber(),
                 p.getSize(),
                 p.getTotalElements(),
