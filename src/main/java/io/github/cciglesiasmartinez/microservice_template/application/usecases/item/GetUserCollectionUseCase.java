@@ -38,7 +38,7 @@ public class GetUserCollectionUseCase {
         String nextLink    = pr.hasNext()     ? link(pr.page() + 1, pr.size()) : null;
         String prevLink    = pr.hasPrevious() ? link(Math.max(pr.page() - 1, 0), pr.size()) : null;
 
-        ListGenericResponse data = new ListGenericResponse(
+        ListGenericResponse<CollectionItemWrapper> data = new ListGenericResponse<>(
                 pr.content(),
                 pr.page(),
                 pr.size(),
@@ -52,7 +52,7 @@ public class GetUserCollectionUseCase {
                 nextLink,
                 prevLink
         );
-        log.info("Servin collection.");
+        log.info("Retrieving item collection for user {}", userId);
         return new Envelope<>(data, new Meta());
     }
 
