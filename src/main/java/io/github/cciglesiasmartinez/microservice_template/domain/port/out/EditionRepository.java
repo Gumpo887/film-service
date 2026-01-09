@@ -24,6 +24,7 @@ public interface EditionRepository {
     // Update
     Edition update(Edition edition);
     Edition save(Edition edition);
+    void persist(Edition edition);
 
     // Delete
     void delete(Edition edition);

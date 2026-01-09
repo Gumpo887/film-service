@@ -60,6 +60,7 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
         return Edition.of(
                 EditionId.of(entity.getId()),
                 film,
+                Slug.of(entity.getSlug()),
                 entity.getCoverPicture(),
                 BarCode.of(entity.getBarCode()),
                 Country.of(entity.getCountry()),
@@ -78,6 +79,7 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
         EditionEntity entity = new EditionEntity();
         entity.setId(edition.editionId().value());
         entity.setFilm(filmEntity);
+        entity.setSlug(edition.slug().value());
         entity.setCoverPicture(edition.coverPicture());
         entity.setBarCode(edition.barCode().value());
         entity.setCountry(edition.country().value());
@@ -93,6 +95,7 @@ public class EditionEntityMapperImpl implements EditionEntityMapper {
     @Override
     public Edition updateEntity(EditionEntity entity, Edition edition) {
 
+        entity.setSlug(edition.slug().value());
         entity.setBarCode(edition.barCode().value());
         entity.setCountry(edition.country().value());
         entity.setFormat(edition.format());

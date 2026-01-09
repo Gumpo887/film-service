@@ -1,12 +1,6 @@
 package io.github.cciglesiasmartinez.microservice_template.domain.model.film;
 
-import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Description;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.FilmId;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Poster;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.ProducingCountry;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Rating;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.ReleaseYear;
-import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.Title;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valueobjects.*;
 
 /**
  * Representa una película dentro del sistema.
@@ -20,6 +14,7 @@ import io.github.cciglesiasmartinez.microservice_template.domain.model.film.valu
 public class Film {
 
     private final FilmId id;
+    private final TmdbId tmdbId;
     private final Title title;
     private final Description description;
     private final ReleaseYear releaseYear;
@@ -32,6 +27,7 @@ public class Film {
      */
     private Film(
             FilmId id,
+            TmdbId tmdbId,
             Title title,
             Description description,
             ReleaseYear releaseYear,
@@ -40,6 +36,7 @@ public class Film {
             Poster poster
     ) {
         this.id = id;
+        this.tmdbId = tmdbId;
         this.title = title;
         this.description = description;
         this.releaseYear = releaseYear;
@@ -52,6 +49,7 @@ public class Film {
      * Método factoría para dar de alta una película por primera vez.
      */
     public static Film create(
+            TmdbId tmdbId,
             Title title,
             Description description,
             ReleaseYear releaseYear,
@@ -59,7 +57,7 @@ public class Film {
             Rating rating,
             Poster poster
     ) {
-        return new Film(FilmId.generate(), title, description, releaseYear, producingCountry, rating, poster);
+        return new Film(FilmId.generate(), tmdbId, title, description, releaseYear, producingCountry, rating, poster);
     }
 
     /**
@@ -67,6 +65,7 @@ public class Film {
      */
     public static Film of(
             FilmId filmId,
+            TmdbId tmdbId,
             Title title,
             Description description,
             ReleaseYear releaseYear,
@@ -74,10 +73,11 @@ public class Film {
             Rating rating,
             Poster poster
     ) {
-        return new Film(filmId, title, description, releaseYear, producingCountry, rating, poster);
+        return new Film(filmId, tmdbId, title, description, releaseYear, producingCountry, rating, poster);
     }
 
-    public FilmId itemId() { return this.id; }
+    public FilmId id() { return this.id; }
+    public TmdbId tmdbId() { return this.tmdbId; }
     public Title title() { return this.title; }
     public Description description() { return this.description; }
     public ReleaseYear releaseYear() { return this.releaseYear; }

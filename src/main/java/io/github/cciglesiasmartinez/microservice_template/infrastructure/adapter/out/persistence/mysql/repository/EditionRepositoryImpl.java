@@ -73,6 +73,11 @@ public class EditionRepositoryImpl implements EditionRepository {
     }
 
     @Override
+    public void persist(Edition edition) {
+        EditionEntity saved = springDataEditionRepository.save(editionEntityMapper.toEntity(edition));
+    }
+
+    @Override
     public void delete(Edition edition) {
         springDataEditionRepository.delete(editionEntityMapper.toEntity(edition));
     }

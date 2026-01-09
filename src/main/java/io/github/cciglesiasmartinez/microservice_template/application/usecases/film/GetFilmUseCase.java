@@ -34,7 +34,7 @@ public class GetFilmUseCase {
                 .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
 
         GetFilmResponse data = new GetFilmResponse(
-                film.itemId().value(),
+                film.id().value(),
                 film.title().value(),
                 film.description().value(),
                 film.releaseYear().value(),

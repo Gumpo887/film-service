@@ -41,11 +41,11 @@ public class UpdateFilmUseCase {
         Rating rating = request.getRating() != null ? Rating.of(request.getRating()) : existing.rating();
         Poster poster = request.getPoster() != null ? Poster.of(request.getPoster()) : existing.poster();
 
-        Film updated = Film.of(existing.itemId(), title, description, releaseYear, producingCountry, rating, poster);
+        Film updated = Film.of(existing.id(), null, title, description, releaseYear, producingCountry, rating, poster);
         updated = filmRepository.update(updated);
 
         UpdateFilmResponse data = new UpdateFilmResponse(
-                updated.itemId().value(),
+                updated.id().value(),
                 updated.title().value(),
                 updated.description().value(),
                 updated.releaseYear().value(),

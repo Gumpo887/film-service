@@ -54,7 +54,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             response.setContentType("application/json");
-                            response.getWriter().write("{\"error\": \"Unauthorized\"}");
+                            response.getWriter().write("{\"error\": \"Unauthorized\"}"); // TODO: Fix this mess.
                         })
                 ) // Handle authentication == null on requests (controller level)
                 .authorizeHttpRequests(auth -> auth

@@ -48,7 +48,7 @@ public class CreateFilmUseCase {
      */
     private CreateFilmResponse getCreateFilmResponseFrom(Film saved) {
         return new CreateFilmResponse(
-                saved.itemId().value(),
+                saved.id().value(),
                 saved.title().value(),
                 saved.description().value(),
                 saved.releaseYear().value(),
@@ -68,7 +68,7 @@ public class CreateFilmUseCase {
         Film film = getFilmFrom(request);
         Film saved = filmRepository.save(film);
         CreateFilmResponse data = getCreateFilmResponseFrom(saved);
-        log.info("Film {} has been successfully added by user {}", saved.itemId().value(), null);
+        log.info("Film {} has been successfully added by user {}", saved.id().value(), null);
         return new Envelope<>(data, new Meta());
     }
 

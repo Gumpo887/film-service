@@ -66,6 +66,7 @@ public class UpdateEditionUseCase {
         Edition updated = Edition.of(
                 existing.editionId(),
                 existing.film(),
+                existing.slug(), // TODO: Consider an update "factory" method for these cases
                 updateCoverPictureIfPresent(request, existing),
                 updateBarCodeIfPresent(request, existing),
                 updateCountryIfPresent(request, existing),

@@ -1,5 +1,7 @@
 package io.github.cciglesiasmartinez.microservice_template.application.usecases.edition;
 
+import io.github.cciglesiasmartinez.microservice_template.domain.event.DomainEventPublisher;
+import io.github.cciglesiasmartinez.microservice_template.domain.event.edition.EditionCreatedEvent;
 import io.github.cciglesiasmartinez.microservice_template.domain.exception.WrongFilmIdException;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.Edition;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.Picture;
@@ -33,6 +35,21 @@ public class CreateEditionUseCase {
 
     private final EditionRepository editionRepository;
     private final FilmRepository filmRepository;
+    private final DomainEventPublisher domainEventPublisher;
+
+    private void publishEditionCreatedEvent(Edition edition, Film film) {
+        EditionCreatedEvent event = EditionCreatedEvent.builder()
+                .editionId(edition.editionId().value())
+                .filmId(film.id().value())
+                .filmTitle(film.title().value())
+                .coverPicture(edition.coverPicture())
+                .barCode(edition.barCode().value())
+                .country(edition.country().value())
+                .format(edition.format().name())
+                .releaseYear(edition.releaseYear())
+                .build();
+        domainEventPublisher.publish(event);
+    }
 
     /**
      * Executes create edition use case.
@@ -52,7 +69,9 @@ public class CreateEditionUseCase {
         Notes notes = Notes.of(request.getNotes());
         List<Picture> pictures = new ArrayList<>();
         Edition edition = Edition.create(film, barCode, country, format, releaseYear, packagingType, notes, pictures);
-        edition = editionRepository.save(edition); // TODO: Careful with this.
+//        edition = editionRepository.save(edition); // TODO: Careful with this.
+        editionRepository.persist(edition);
+        publishEditionCreatedEvent(edition, film);
         CreateEditionResponse data = new CreateEditionResponse(edition.editionId().value(), true);
         log.info("Edition {} successfully created.", edition.editionId().value());
         return new Envelope<>(data, new Meta());
