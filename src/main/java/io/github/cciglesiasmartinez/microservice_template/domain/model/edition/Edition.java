@@ -16,6 +16,7 @@ public class Edition {
 
     private EditionId id;
     private Film film;
+    private Slug slug;
     private String coverPicture;
     private BarCode barCode;
     private Country country;
@@ -28,6 +29,7 @@ public class Edition {
     private Edition(
             EditionId id,
             Film film,
+            Slug slug,
             String coverPicture,
             BarCode barCode,
             Country country,
@@ -39,7 +41,8 @@ public class Edition {
     ) {
         this.id = id;
         this.film = film;
-        this.coverPicture = this.coverPicture;
+        this.slug = slug;
+        this.coverPicture = coverPicture;
         this.barCode = barCode;
         this.country = country;
         this.format = format;
@@ -75,6 +78,7 @@ public class Edition {
         return new Edition(
                 EditionId.generate(),
                 film,
+                Slug.generate(film.title().value(), film.releaseYear()),
                 null,
                 barCode,
                 country,
@@ -103,6 +107,7 @@ public class Edition {
     public static Edition of(
             EditionId id,
             Film film,
+            Slug slug,
             String coverPicture,
             BarCode barCode,
             Country country,
@@ -112,7 +117,7 @@ public class Edition {
             Notes notes,
             List<Picture> pictures
     ) {
-        return new Edition(id, film, coverPicture, barCode, country, format, releaseYear, packagingType, notes, pictures);
+        return new Edition(id, film, slug, coverPicture, barCode, country, format, releaseYear, packagingType, notes, pictures);
     }
 
     /**
@@ -140,6 +145,7 @@ public class Edition {
 
     public EditionId editionId() { return this.id; }
     public Film film() { return this.film; }
+    public Slug slug() { return this.slug; }
     public String coverPicture() { return this.coverPicture; }
     public BarCode barCode() { return this.barCode; }
     public Country country() { return this.country; }

@@ -19,6 +19,8 @@ public class EditionWrapper {
 
     private String id;
     private String filmId;
+    private String slug;
+    private String coverPicture;
     private String barcode;
     private String country;
     private String format;
@@ -26,7 +28,6 @@ public class EditionWrapper {
     private String packagingType;
     private boolean verified;
     private String notes;
-    private String pictureUrl;
 
     private static String extractPictureFrom(Edition edition) {
         return !edition.pictures().isEmpty()
@@ -37,15 +38,16 @@ public class EditionWrapper {
     public static EditionWrapper from(Edition edition) {
         return new EditionWrapper(
                 edition.editionId().value(),
-                edition.film().itemId().value(),
+                edition.film().id().value(),
+                edition.slug().value(),
+                edition.coverPicture(),
                 edition.barCode().value(),
                 edition.country().value(),
                 edition.format().name(),
                 edition.releaseYear(),
                 edition.packagingType().name(),
                 true,
-                edition.notes().value(),
-                extractPictureFrom(edition));
+                edition.notes().value());
     }
 
 }

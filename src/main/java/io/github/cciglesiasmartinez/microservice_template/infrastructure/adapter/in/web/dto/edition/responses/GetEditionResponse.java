@@ -24,6 +24,7 @@ public class GetEditionResponse {
     private String id;
     private String filmId;
 
+    private String slug;
     private String barcode;
     private String country;
     private String format;
@@ -47,7 +48,8 @@ public class GetEditionResponse {
     public static GetEditionResponse from(Edition edition) {
         return new GetEditionResponse(
                 edition.editionId().value(),
-                edition.film().itemId().value(),
+                edition.film().id().value(),
+                edition.slug().value(),
                 edition.barCode().value(),
                 edition.country().value(),
                 edition.format().name(),
