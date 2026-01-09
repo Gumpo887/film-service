@@ -31,7 +31,7 @@ public class ListFilmsUseCase {
         // Map Domain -> DTO (resumen para listados)
         List<FilmInfoWrapper> items = pr.content().stream()
                 .map(f -> new FilmInfoWrapper(
-                        f.itemId().value(),
+                        f.id().value(),
                         f.title().value(),
                         f.releaseYear().value(),
                         f.producingCountry().value(),
