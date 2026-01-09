@@ -40,7 +40,7 @@ public class CreateEditionUseCase {
     private void publishEditionCreatedEvent(Edition edition, Film film) {
         EditionCreatedEvent event = EditionCreatedEvent.builder()
                 .editionId(edition.editionId().value())
-                .filmId(film.itemId().value())
+                .filmId(film.id().value())
                 .filmTitle(film.title().value())
                 .coverPicture(edition.coverPicture())
                 .barCode(edition.barCode().value())
@@ -69,7 +69,8 @@ public class CreateEditionUseCase {
         Notes notes = Notes.of(request.getNotes());
         List<Picture> pictures = new ArrayList<>();
         Edition edition = Edition.create(film, barCode, country, format, releaseYear, packagingType, notes, pictures);
-        edition = editionRepository.save(edition); // TODO: Careful with this.
+//        edition = editionRepository.save(edition); // TODO: Careful with this.
+        editionRepository.persist(edition);
         publishEditionCreatedEvent(edition, film);
         CreateEditionResponse data = new CreateEditionResponse(edition.editionId().value(), true);
         log.info("Edition {} successfully created.", edition.editionId().value());
