@@ -40,6 +40,23 @@ public class KafkaConfig {
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         return new KafkaAdmin(configs);
     }
+    
+    @Bean
+    public ProducerFactory<String, String> StringProducerFactory(){
+    	Map<String,Object> configProps = new HashMap<>();
+    	configProps.put(
+    			ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
+    			bootstrapAddress);
+    	configProps.put(
+    			ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
+    			StringSerializer.class);
+    	configProps.put(
+    			ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
+    			StringSerializer.class);
+    
+		return new DefaultKafkaProducerFactory<>(configProps);
+    	
+    }
 
     /**
      * Crea el tópico principal del servicio si no existe.
