@@ -16,10 +16,12 @@ public class StorageServiceImpl implements StorageService {
 
     // TODO: Add file hashing (MD5?) check. Might be needed to include in picture.
     @Override
-    public void save(String fileName, MultipartFile file) {
+    public void  save(String editionSlug, String fileName, MultipartFile file) {
         try {
             String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-            Path target = root.resolve(fileName + "." + extension);
+            Path dirPath = root.resolve(editionSlug);
+            Files.createDirectories(dirPath);
+            Path target = dirPath.resolve(fileName + "." + extension);
             Files.copy(file.getInputStream(), target);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -27,9 +29,10 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public void delete(String fileName) {
+    public void delete(String editionSlug, String fileName) {
         try {
-            Path target = root.resolve(fileName);
+            Path dirPath = root.resolve(editionSlug);
+            Path target = dirPath.resolve(fileName);
             Files.delete(target);
         } catch (IOException e) {
             throw new RuntimeException(e);

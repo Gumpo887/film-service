@@ -4,8 +4,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface StorageService {
 
-    void save(String fileName, MultipartFile file);
-    void delete(String fileName);
+    // TODO: Add file hashing (MD5?) check. Might be needed to include in picture.
+    void save(String editionSlug, String fileName, MultipartFile file);
+    void delete(String editionSlug, String fileName);
     String getFileExtension(MultipartFile file);
 
 }
