@@ -23,9 +23,14 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Create edition use case.
- * TODO: We need a strong strategy against dupes. Probably we'll want a draft strategy.
+ * Application service for creating a new edition for a film.
+ * <p>
+ * Validates the provided film ID, creates a new {@link Edition} instance, persists it and
+ * publishes an {@link EditionCreatedEvent} event.
+ * <p>
+ * TODO: Consider a future strategy against duplicate editions.
  */
 @Service
 @AllArgsConstructor
@@ -37,6 +42,12 @@ public class CreateEditionUseCase {
     private final FilmRepository filmRepository;
     private final DomainEventPublisher domainEventPublisher;
 
+    /**
+     * Publishes an {@link EditionCreatedEvent} event after a new edition is created.
+     *
+     * @param edition the newly created {@link Edition} instance.
+     * @param film    the associated {@link Film} instance.
+     */
     private void publishEditionCreatedEvent(Edition edition, Film film) {
         EditionCreatedEvent event = EditionCreatedEvent.builder()
                 .editionId(edition.editionId().value())
@@ -52,10 +63,12 @@ public class CreateEditionUseCase {
     }
 
     /**
-     * Executes create edition use case.
+     * Executes the create edition use case.
      *
-     * @param request
-     * @return
+     * @param request   the {@link CreateEditionRequest} containing edition details.
+     * @return          an {@link Envelope} containing {@link CreateEditionResponse} with the result.
+     *
+     * @throws WrongFilmIdException if the provided film ID does not exist.
      */
     public Envelope<CreateEditionResponse> execute(CreateEditionRequest request) {
         FilmId filmId = FilmId.of(request.getFilmId());
