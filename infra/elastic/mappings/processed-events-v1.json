@@ -1,0 +1,8 @@
+{
+  "mappings": {
+    "properties": {
+      "activeUsers": { "type": "integer" },
+      "updatedAt": { "type": "date" }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "mappings": {
+    "properties": {
+      "itemId": { "type": "keyword" },
+      "owners": { "type": "integer" },
+      "U": { "type": "integer" },
+      "rarity": { "type": "float" },
+      "updatedAt": { "type": "date" }
+    }
+  }
+}

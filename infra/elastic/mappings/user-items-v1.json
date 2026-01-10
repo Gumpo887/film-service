@@ -1,0 +1,17 @@
+{
+  "mappings": {
+    "properties": {
+      "userId": { "type": "keyword" },
+      "itemId": { "type": "keyword" },
+      "edition": { "type": "keyword" },
+      "condition": { "type": "keyword" },
+      "completeness": { "type": "keyword" },
+      "editionWeight": { "type": "float" },
+      "conditionWeight": { "type": "float" },
+      "completenessWeight": { "type": "float" },
+      "rarity": { "type": "float" },
+      "scoreItem": { "type": "float" },
+      "updatedAt": { "type": "date" }
+    }
+  }
+}

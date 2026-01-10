@@ -1,0 +1,17 @@
+{
+  "mappings": {
+    "properties": {
+      "userId": { "type": "keyword" },
+      "score": { "type": "double" },
+      "distinctOwnedCount": { "type": "integer" },
+      "topK": {
+        "type": "nested",
+        "properties": {
+          "itemId": { "type": "keyword" },
+          "scoreItem": { "type": "float" }
+        }
+      },
+      "updatedAt": { "type": "date" }
+    }
+  }
+}

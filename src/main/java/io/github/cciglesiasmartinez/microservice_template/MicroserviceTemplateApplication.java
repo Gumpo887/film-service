@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		info = @Info(title = "Item service API", version = "v1")
 )
 @SpringBootApplication
+@ConfigurationPropertiesScan(basePackages = "io.github.cciglesiasmartinez.microservice_template.infrastructure.config")
 @EnableJpaRepositories(basePackages = "io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.persistence.mysql.repository")
 @EntityScan(basePackages = "io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.out.persistence.mysql.entity")
 public class MicroserviceTemplateApplication {

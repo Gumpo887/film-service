@@ -1,0 +1,9 @@
+{
+  "mappings": {
+    "properties": {
+      "userId": { "type": "keyword" },
+      "status": { "type": "keyword" },
+      "updatedAt": { "type": "date" }
+    }
+  }
+}
