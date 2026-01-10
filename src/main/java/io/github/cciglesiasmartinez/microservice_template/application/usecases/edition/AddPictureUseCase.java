@@ -27,11 +27,16 @@ public class AddPictureUseCase {
     private StorageService storageService;
 
     /**
-     * Executes add picture use case.
+     * Executes the add picture use case. It works by loading the edition, adding the picture to it,
+     * then saving the edition and storing the file in the storage service.
      *
-     * @param id
-     * @param file
-     * @return
+     * @param id    represents the edition id
+     * @param file  is the picture {@link MultipartFile} to be added
+     * @return      an {@link Envelope} containing a {@link CreatePictureResponse} with the result
+     *
+     * @throws RuntimeException if the edition id is not found
+     * @throws RuntimeException if there is an error saving the file
+     *
      */
     public Envelope<CreatePictureResponse> execute(String id, MultipartFile file) {
         EditionId editionId = EditionId.of(id);
@@ -39,8 +44,10 @@ public class AddPictureUseCase {
                 .orElseThrow(() -> new RuntimeException("ID not found."));
         String fileNameExtension = storageService.getFileExtension(file);
         Picture picture = edition.addPicture(fileNameExtension);
+        // TODO: Make this method void. Or use persist, but keep in mind about checking by id
+        // and updating on the mapper (JPA's gotchas :)
         Edition updated = editionRepository.update(edition);
-        storageService.save(picture.id().value(), file);
+        storageService.save(edition.slug().value(), picture.id().value(), file);
         CreatePictureResponse data = new CreatePictureResponse(picture.id().value(), true);
         log.info("Picture added successfully.");
         return new Envelope<>(data, new Meta());

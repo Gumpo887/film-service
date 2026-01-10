@@ -31,6 +31,7 @@ public class CreateFilmUseCase {
      */
     private Film getFilmFrom(CreateFilmRequest request) {
         return Film.create(
+                TmdbId.of(request.getTmdbId()),
                 Title.of(request.getTitle()),
                 Description.of(request.getDescription()),
                 ReleaseYear.of(request.getReleaseYear()),
@@ -58,6 +59,11 @@ public class CreateFilmUseCase {
         );
     }
 
+    private void checkIfFilmExistsByTmdbId(TmdbId tmdbId) {
+        if (filmRepository.existsByTmdbId(tmdbId))
+            throw new IllegalArgumentException("TMDB ID is already found on database.");
+    }
+
     /**
      * Executes create film use case.
      *
@@ -65,6 +71,7 @@ public class CreateFilmUseCase {
      * @return {@link CreateFilmResponse} DTO containing film information.
      */
     public Envelope<CreateFilmResponse> execute(CreateFilmRequest request) {
+        checkIfFilmExistsByTmdbId(TmdbId.of(request.getTmdbId()));
         Film film = getFilmFrom(request);
         Film saved = filmRepository.save(film);
         CreateFilmResponse data = getCreateFilmResponseFrom(saved);

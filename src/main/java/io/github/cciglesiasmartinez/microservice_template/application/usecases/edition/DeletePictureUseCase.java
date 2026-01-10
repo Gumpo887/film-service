@@ -3,6 +3,7 @@ package io.github.cciglesiasmartinez.microservice_template.application.usecases.
 import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.Edition;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.Picture;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.valueobjects.EditionId;
+import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.valueobjects.Slug;
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.EditionRepository;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Envelope;
 import io.github.cciglesiasmartinez.microservice_template.infrastructure.adapter.in.web.dto.common.responses.Meta;
@@ -23,12 +24,13 @@ public class DeletePictureUseCase {
     private StorageService storageService;
 
     private void removePicture(String pictureId, Edition edition) {
+        Slug editionSlug = edition.slug();
         Picture pictureToDelete = null;
         for (Picture p: edition.pictures()) {
             if (p.id().value().equals(pictureId)) {
                 pictureToDelete = p;
                 edition.pictures().remove(p);
-                storageService.delete(pictureToDelete.url().value());
+                storageService.delete(pictureToDelete.url().value(), editionSlug.value());
                 break;
             }
         }

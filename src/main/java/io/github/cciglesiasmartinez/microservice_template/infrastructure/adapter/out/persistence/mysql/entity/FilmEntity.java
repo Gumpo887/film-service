@@ -25,7 +25,7 @@ public class FilmEntity implements Serializable {
     private String id; // FilmId como String (UUID)
 
     @Column(name = "tmdb_id")
-    private String tmdbId;
+    private Long tmdbId;
 
     @Column(nullable = false, length = 255)
     private String title;
