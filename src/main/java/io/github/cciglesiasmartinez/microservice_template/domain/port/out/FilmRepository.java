@@ -15,7 +15,7 @@ public interface FilmRepository {
     // READ
     Optional<Film> findById(FilmId id);
     PageResult<Film> findPage(int page, int size);
-    boolean existsByTmdbId(TmdbId tmdbId);// opcional
+    Optional<Film> findByTmdbId(TmdbId tmdbId);
 
     // UPDATE
     Film update(Film film); // lanza si no existe

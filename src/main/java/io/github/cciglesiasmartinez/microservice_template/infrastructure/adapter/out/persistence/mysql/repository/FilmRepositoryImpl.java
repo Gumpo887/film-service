@@ -38,11 +38,6 @@ public class FilmRepositoryImpl implements FilmRepository {
     }
 
     @Override
-    public boolean existsByTmdbId(TmdbId tmdbId) {
-        return springDataFilmRepository.existsByTmdbId(tmdbId.value());
-    }
-
-    @Override
     @Transactional
     public Film update(Film film) {
         FilmEntity saved = springDataFilmRepository.save(mapper.toEntity(film));
@@ -86,6 +81,11 @@ public class FilmRepositoryImpl implements FilmRepository {
             p.hasNext(),
             p.hasPrevious()
         );
+    }
+
+    @Override
+    public Optional<Film> findByTmdbId(TmdbId tmdbId) {
+        return springDataFilmRepository.findByTmdbId(tmdbId.value()).map(mapper::toDomain);
     }
 }
 
