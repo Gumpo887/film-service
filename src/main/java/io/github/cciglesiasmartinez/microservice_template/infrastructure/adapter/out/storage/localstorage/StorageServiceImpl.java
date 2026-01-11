@@ -44,5 +44,4 @@ public class StorageServiceImpl implements StorageService {
         return FilenameUtils.getExtension(file.getOriginalFilename());
     }
 
-
 }
