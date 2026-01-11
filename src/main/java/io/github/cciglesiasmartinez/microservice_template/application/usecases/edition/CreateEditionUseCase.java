@@ -43,10 +43,23 @@ public class CreateEditionUseCase {
     private final DomainEventPublisher domainEventPublisher;
 
     /**
+     * Retrieves a {@link Film} by its ID.
+     *
+     * @param filmId    the {@link FilmId} of the film to retrieve.
+     * @return          the corresponding {@link Film} instance.
+     *
+     * @throws WrongFilmIdException if the film ID does not exist.
+     */
+    private Film getFilm(FilmId filmId) {
+        return filmRepository.findById(filmId)
+                .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
+    }
+
+    /**
      * Publishes an {@link EditionCreatedEvent} event after a new edition is created.
      *
-     * @param edition the newly created {@link Edition} instance.
-     * @param film    the associated {@link Film} instance.
+     * @param edition   the newly created {@link Edition} instance.
+     * @param film      the associated {@link Film} instance.
      */
     private void publishEditionCreatedEvent(Edition edition, Film film) {
         EditionCreatedEvent event = EditionCreatedEvent.builder()
@@ -72,8 +85,7 @@ public class CreateEditionUseCase {
      */
     public Envelope<CreateEditionResponse> execute(CreateEditionRequest request) {
         FilmId filmId = FilmId.of(request.getFilmId());
-        Film film = filmRepository.findById(filmId)
-                .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
+        Film film = getFilm(filmId);
         BarCode barCode = BarCode.of(request.getBarCode());
         Country country = Country.of(request.getCountry());
         Format format = Format.valueOf(request.getFormat());
@@ -82,7 +94,6 @@ public class CreateEditionUseCase {
         Notes notes = Notes.of(request.getNotes());
         List<Picture> pictures = new ArrayList<>();
         Edition edition = Edition.create(film, barCode, country, format, releaseYear, packagingType, notes, pictures);
-//        edition = editionRepository.save(edition); // TODO: Careful with this.
         editionRepository.persist(edition);
         publishEditionCreatedEvent(edition, film);
         CreateEditionResponse data = new CreateEditionResponse(edition.editionId().value(), true);

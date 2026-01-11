@@ -50,10 +50,10 @@ public class CreateItemUseCase {
     /**
      * Builds an Item domain object from request data.
      *
-     * @param   request item data
-     * @param   userId  owner identifier
-     * @param   edition associated edition
-     * @return  new Item instance
+     * @param request   item data
+     * @param userId    owner identifier
+     * @param edition   associated edition
+     * @return new      Item instance
      */
     private Item getItemFrom(CreateItemRequest request, String userId, Edition edition) {
         return Item.create(
