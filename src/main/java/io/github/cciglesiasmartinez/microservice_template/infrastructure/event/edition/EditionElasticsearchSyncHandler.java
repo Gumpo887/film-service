@@ -30,7 +30,8 @@ public class EditionElasticsearchSyncHandler {
         EditionDocument edition = EditionDocument.builder()
                 .id(event.getEditionId())
                 .filmId(event.getFilmId())
-                .filmTitle(event.getFilmId())
+                .slug(event.getSlug())
+                .filmTitle(event.getFilmTitle())
                 .coverPicture(event.getCoverPicture())
                 .barCode(event.getBarCode())
                 .country(event.getCountry())
@@ -42,5 +43,8 @@ public class EditionElasticsearchSyncHandler {
                 .build();
         editionSearchRepository.save(edition);
     }
+
+    // TODO: Implementar caso de update, con miras a obtener la coverPicture de las ediciones.
+    // TODO: Posiblemente repasar si queremos algunos datos de cara a las búsquedas.
 
 }

@@ -13,6 +13,7 @@ public class EditionCreatedEvent extends DomainEvent {
 
     private final String editionId;
     private final String filmId;
+    private final String slug;
     private final String filmTitle;
     private final String coverPicture;
     private final String barCode;
@@ -26,6 +27,7 @@ public class EditionCreatedEvent extends DomainEvent {
     private EditionCreatedEvent(
             String editionId,
             String filmId,
+            String slug,
             String filmTitle,
             String coverPicture,
             String barCode,
@@ -38,6 +40,7 @@ public class EditionCreatedEvent extends DomainEvent {
         super(EditionCreatedEvent.class.getSimpleName());
         this.editionId = editionId;
         this.filmId = filmId;
+        this.slug = slug;
         this.filmTitle = filmTitle;
         this.coverPicture = coverPicture;
         this.barCode = barCode;
