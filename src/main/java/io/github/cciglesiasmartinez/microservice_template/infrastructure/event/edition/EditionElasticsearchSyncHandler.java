@@ -61,12 +61,11 @@ public class EditionElasticsearchSyncHandler {
     }
 
     private EditionDocument getEditionDocument(EditionUpdatedEvent event) {
-        EditionDocument edition = editionSearchRepository.findById(event.getEditionId())
+        return editionSearchRepository.findById(event.getEditionId())
                 .orElseThrow(() -> {
                     String message = "Edition not found in Elasticsearch for id " + event.getEditionId();
                     return new RuntimeException(message);
                 });
-        return edition;
     }
 
     private String buildSearchableText(String filmTitle, String barCode, String country, String notes) {
