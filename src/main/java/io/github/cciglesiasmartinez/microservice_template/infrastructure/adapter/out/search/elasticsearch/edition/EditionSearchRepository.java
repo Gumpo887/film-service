@@ -4,9 +4,11 @@ import io.github.cciglesiasmartinez.microservice_template.domain.shared.PageResu
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface EditionSearchRepository extends ElasticsearchRepository<EditionDocument, String> {
 
-    PageResult<EditionDocument> searchBySearchableText(String text, int page, int size);
+    Optional<PageResult<EditionDocument>> searchBySearchableText(String text, int page, int size);
 
 }

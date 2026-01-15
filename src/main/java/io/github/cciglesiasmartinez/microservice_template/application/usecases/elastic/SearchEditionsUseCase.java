@@ -24,19 +24,15 @@ public class SearchEditionsUseCase {
     @Value("${app.api-base-path:/elastic}")
     private String basePath;
 
-    private String link(int page, int size) {
+    private String buildLink(int page, int size) {
         String cleanBase = (basePath != null && basePath.endsWith("/"))
                 ? basePath.substring(0, basePath.length() - 1)
                 : basePath;
         return String.format("%s?page=%d&size=%d", cleanBase, page, size);
     }
 
-    public Envelope<ListGenericResponse<ElasticEditionWrapper>> execute(String query, int page, int size) {
-        PageResult<EditionDocument> pageResult = editionSearchRepository.searchBySearchableText(query, page, size);
-        if (pageResult == null ) {
-            pageResult = PageResult.empty();
-        }
-        List<ElasticEditionWrapper> elements = pageResult.content().stream()
+    private List<ElasticEditionWrapper> getEditionWrappersList(PageResult<EditionDocument> pageResult) {
+        return pageResult.content().stream()
                 .map(e -> {
                     return ElasticEditionWrapper.builder()
                             .id(e.getId())
@@ -52,11 +48,17 @@ public class SearchEditionsUseCase {
                             .notes(e.getNotes())
                             .build();
                 }).toList();
+    }
+
+    public Envelope<ListGenericResponse<ElasticEditionWrapper>> execute(String query, int page, int size) {
+        PageResult<EditionDocument> pageResult = editionSearchRepository.searchBySearchableText(query, page, size)
+                .orElse(PageResult.empty());
+        List<ElasticEditionWrapper> elements = getEditionWrappersList(pageResult);
         Integer nextPage = pageResult.hasNext() ? pageResult.page() + 1 : null;
         Integer prevPage = pageResult.hasPrevious() ? pageResult.page() - 1 : null;
-        String currentLink = link(pageResult.page(), pageResult.size());
-        String nextLink    = pageResult.hasNext()     ? link(pageResult.page() + 1, pageResult.size()) : null;
-        String prevLink    = pageResult.hasPrevious() ? link(Math.max(pageResult.page() - 1, 0), pageResult.size()) : null;
+        String currentLink = buildLink(pageResult.page(), pageResult.size());
+        String nextLink    = pageResult.hasNext()     ? buildLink(pageResult.page() + 1, pageResult.size()) : null;
+        String prevLink    = pageResult.hasPrevious() ? buildLink(Math.max(pageResult.page() - 1, 0), pageResult.size()) : null;
         ListGenericResponse<ElasticEditionWrapper> data = new ListGenericResponse<>(
                 elements,
                 pageResult.page(),
