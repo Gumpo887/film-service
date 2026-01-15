@@ -66,6 +66,7 @@ public class CreateEditionUseCase {
                 .editionId(edition.editionId().value())
                 .filmId(film.id().value())
                 .filmTitle(film.title().value())
+                .slug(edition.slug().value())
                 .coverPicture(edition.coverPicture())
                 .barCode(edition.barCode().value())
                 .country(edition.country().value())
