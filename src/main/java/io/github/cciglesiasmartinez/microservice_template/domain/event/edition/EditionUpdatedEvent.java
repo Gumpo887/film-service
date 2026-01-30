@@ -9,7 +9,7 @@ import java.time.Year;
 
 @Getter
 @Setter
-public class EditionCreatedEvent extends DomainEvent {
+public class EditionUpdatedEvent extends DomainEvent {
 
     private final String editionId;
     private final String filmId;
@@ -24,7 +24,7 @@ public class EditionCreatedEvent extends DomainEvent {
     private final String notes;
 
     @Builder
-    private EditionCreatedEvent(
+    private EditionUpdatedEvent(
             String editionId,
             String filmId,
             String slug,

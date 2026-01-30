@@ -7,24 +7,24 @@ import lombok.ToString;
 @ToString
 public class TmdbId {
 
-    private final String value;
+    private final Long value;
 
-    private TmdbId(String value) {
+    private TmdbId(Long value) {
         this.value = value;
     }
 
-    public static TmdbId of(String tmdbId) {
-        if (tmdbId == null || tmdbId.isBlank()) {
-            throw new IllegalArgumentException("TMDB ID can't be null or empty.");
+    public static TmdbId of(Long tmdbId) {
+        if (tmdbId == null) {
+            throw new IllegalArgumentException("TMDB ID can't be null.");
         }
         return new TmdbId(tmdbId);
     }
 
-    public String getValue() {
+    public long getValue() {
         return this.value;
     }
 
-    public String value() {
+    public long value() {
         return this.value;
     }
 }

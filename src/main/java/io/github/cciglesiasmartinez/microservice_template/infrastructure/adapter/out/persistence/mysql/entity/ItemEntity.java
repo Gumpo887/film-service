@@ -40,11 +40,9 @@ public class ItemEntity implements Serializable {
     @Column(name = "purchase_price")
     private Double purchasePrice;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "media_condition")
     private Condition mediaCondition;
-
 
     @Enumerated(EnumType.STRING)
     @Column(name = "case_condition")

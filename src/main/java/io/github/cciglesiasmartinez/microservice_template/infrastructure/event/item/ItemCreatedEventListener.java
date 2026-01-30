@@ -1,15 +1,12 @@
-package io.github.cciglesiasmartinez.microservice_template.infrastructure.event;
+package io.github.cciglesiasmartinez.microservice_template.infrastructure.event.item;
 
 import io.github.cciglesiasmartinez.microservice_template.domain.port.out.MessageBroker;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.MDC;
-import org.springframework.context.event.EventListener;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
- * Esta clase será el handler para el evento {@link ItemCreatedEvent}. En principio cada evento tendrá un handler
+ * Esta clase será el handler para el evento Item Created. En principio cada evento tendrá un handler
  * propio aunque a futuro será interesante considerar si podemos crear un handler global. Posiblemente esta última sea
  * la opción más idónea.
  */

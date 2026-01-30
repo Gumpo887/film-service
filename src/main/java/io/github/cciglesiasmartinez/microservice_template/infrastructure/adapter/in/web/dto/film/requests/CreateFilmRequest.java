@@ -15,6 +15,9 @@ import lombok.Setter;
 @Schema(description = "Payload to create a new film.")
 public class CreateFilmRequest {
 
+    @Schema(description = "TMDB identifier", example = "158761")
+    private Long tmdbId;
+
     @NotBlank
     @Size(max = 200)
     @Schema(description = "Film title", example = "Inception")
@@ -22,7 +25,10 @@ public class CreateFilmRequest {
 
     @NotBlank
     @Size(max = 2000)
-    @Schema(description = "Film description", example = "A thief who steals corporate secrets through dream-sharing technology.")
+    @Schema(
+            description = "Film description",
+            example = "A thief who steals corporate secrets through dream-sharing technology."
+    )
     private String description;
 
     @NotNull
@@ -43,7 +49,7 @@ public class CreateFilmRequest {
 
     @NotBlank
     @Size(max = 1024)
-    @Pattern(regexp = "https?://.+", message = "poster must be a valid URL")
+//    @Pattern(regexp = "https?://.+", message = "poster must be a valid URL")
     @Schema(description = "Poster URL", example = "https://cdn.example.com/posters/inception.jpg")
     private String poster;
 }

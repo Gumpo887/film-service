@@ -1,5 +1,7 @@
 package io.github.cciglesiasmartinez.microservice_template.application.usecases.edition;
 
+import io.github.cciglesiasmartinez.microservice_template.domain.event.DomainEventPublisher;
+import io.github.cciglesiasmartinez.microservice_template.domain.event.edition.EditionUpdatedEvent;
 import io.github.cciglesiasmartinez.microservice_template.domain.exception.WrongFilmIdException;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.Edition;
 import io.github.cciglesiasmartinez.microservice_template.domain.model.edition.valueobjects.*;
@@ -24,6 +26,12 @@ import java.time.Year;
 public class UpdateEditionUseCase {
 
     private EditionRepository editionRepository;
+    private DomainEventPublisher domainEventPublisher;
+
+    private Edition getEditionFromRepository(UpdateEditionRequest request) {
+        return editionRepository.findById(EditionId.of(request.getId()))
+                .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
+    }
 
     private String updateCoverPictureIfPresent(UpdateEditionRequest request, Edition existing) {
         return request.getCoverPicture() != null ? request.getCoverPicture() : existing.coverPicture();
@@ -54,15 +62,24 @@ public class UpdateEditionUseCase {
         return  request.getBarCode() != null ? BarCode.of(request.getBarCode()) : existing.barCode();
     }
 
-    /**
-     * Execute update edition use case.
-     *
-     * @param request
-     * @return
-     */
+    private EditionUpdatedEvent buildEditionUpdatedEvent(Edition updated) {
+        EditionUpdatedEvent event = EditionUpdatedEvent.builder()
+                .editionId(updated.editionId().value())
+                .filmId(updated.film().id().value())
+                .slug(updated.slug().value())
+                .coverPicture(updated.coverPicture())
+                .barCode(updated.barCode().value())
+                .country(updated.country().value())
+                .format(updated.format().name())
+                .releaseYear(updated.releaseYear())
+                .packagingType(updated.packagingType().name())
+                .notes(updated.notes().value())
+                .build();
+        return event;
+    }
+
     public Envelope<UpdateEditionResponse> execute(UpdateEditionRequest request) {
-        Edition existing = editionRepository.findById(EditionId.of(request.getId()))
-                .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
+        Edition existing = getEditionFromRepository(request);
         Edition updated = Edition.of(
                 existing.editionId(),
                 existing.film(),
@@ -75,6 +92,8 @@ public class UpdateEditionUseCase {
                 updatePackagingIfPresent(request, existing),
                 updateNotesIfPresent(request, existing),
                 existing.pictures());
+        EditionUpdatedEvent event = buildEditionUpdatedEvent(updated);
+        domainEventPublisher.publish(event);
         updated = editionRepository.update(updated); // TODO: Review this, consider a void method instead.
         UpdateEditionResponse data = new UpdateEditionResponse(updated.editionId().value(), true);
         return new Envelope<>(data, new Meta());

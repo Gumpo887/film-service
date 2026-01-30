@@ -20,10 +20,13 @@ public class EditionDocument {
     @Field(type = FieldType.Text, analyzer = "english")
     private String filmId;
 
+    @Field(type = FieldType.Keyword)
+    private String slug;
+
     @Field(type = FieldType.Text, analyzer = "english")
     private String filmTitle;
 
-    @Field(type = FieldType.Text, analyzer = "english")
+    @Field(type = FieldType.Binary)
     private String coverPicture;
 
     @Field(type = FieldType.Keyword)

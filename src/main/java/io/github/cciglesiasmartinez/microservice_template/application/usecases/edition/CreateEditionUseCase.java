@@ -23,9 +23,14 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Create edition use case.
- * TODO: We need a strong strategy against dupes. Probably we'll want a draft strategy.
+ * Application service for creating a new edition for a film.
+ * <p>
+ * Validates the provided film ID, creates a new {@link Edition} instance, persists it and
+ * publishes an {@link EditionCreatedEvent} event.
+ * <p>
+ * TODO: Consider a future strategy against duplicate editions.
  */
 @Service
 @AllArgsConstructor
@@ -37,11 +42,31 @@ public class CreateEditionUseCase {
     private final FilmRepository filmRepository;
     private final DomainEventPublisher domainEventPublisher;
 
+    /**
+     * Retrieves a {@link Film} by its ID.
+     *
+     * @param filmId    the {@link FilmId} of the film to retrieve.
+     * @return          the corresponding {@link Film} instance.
+     *
+     * @throws WrongFilmIdException if the film ID does not exist.
+     */
+    private Film getFilm(FilmId filmId) {
+        return filmRepository.findById(filmId)
+                .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
+    }
+
+    /**
+     * Publishes an {@link EditionCreatedEvent} event after a new edition is created.
+     *
+     * @param edition   the newly created {@link Edition} instance.
+     * @param film      the associated {@link Film} instance.
+     */
     private void publishEditionCreatedEvent(Edition edition, Film film) {
         EditionCreatedEvent event = EditionCreatedEvent.builder()
                 .editionId(edition.editionId().value())
                 .filmId(film.id().value())
                 .filmTitle(film.title().value())
+                .slug(edition.slug().value())
                 .coverPicture(edition.coverPicture())
                 .barCode(edition.barCode().value())
                 .country(edition.country().value())
@@ -52,15 +77,16 @@ public class CreateEditionUseCase {
     }
 
     /**
-     * Executes create edition use case.
+     * Executes the create edition use case.
      *
-     * @param request
-     * @return
+     * @param request   the {@link CreateEditionRequest} containing edition details.
+     * @return          an {@link Envelope} containing {@link CreateEditionResponse} with the result.
+     *
+     * @throws WrongFilmIdException if the provided film ID does not exist.
      */
     public Envelope<CreateEditionResponse> execute(CreateEditionRequest request) {
         FilmId filmId = FilmId.of(request.getFilmId());
-        Film film = filmRepository.findById(filmId)
-                .orElseThrow(() -> new WrongFilmIdException("Film ID not found"));
+        Film film = getFilm(filmId);
         BarCode barCode = BarCode.of(request.getBarCode());
         Country country = Country.of(request.getCountry());
         Format format = Format.valueOf(request.getFormat());
@@ -69,7 +95,6 @@ public class CreateEditionUseCase {
         Notes notes = Notes.of(request.getNotes());
         List<Picture> pictures = new ArrayList<>();
         Edition edition = Edition.create(film, barCode, country, format, releaseYear, packagingType, notes, pictures);
-//        edition = editionRepository.save(edition); // TODO: Careful with this.
         editionRepository.persist(edition);
         publishEditionCreatedEvent(edition, film);
         CreateEditionResponse data = new CreateEditionResponse(edition.editionId().value(), true);
